@@ -23,7 +23,7 @@ class State:
 state = State()
 IV = 2.7
 state.position = (IV,0,0)
-state.velocity = (0,IV,0.1*IV)
+state.velocity = (0.2*IV,IV,0.1*IV)
 
 # Initialize list to store trace points
 trace_points = []
@@ -32,18 +32,19 @@ def random_acceleration():
     """Generate a random acceleration vector with components in the range (-1, 1)."""
     return np.array([A_MAX*random.uniform(-1, 1) for _ in range(3)])
 
-def gravitational_acceleration(position):
+def gravitational_acceleration(position, g_param = 25, power=2):
     """Calculate gravitational acceleration towards the origin based on distance (1/r^2)."""
     r = np.linalg.norm(position)  # Distance from origin
     if r == 0:
         return np.array([0.0, 0.0, 0.0])  # Avoid division by zero at the origin
-    return -G * (position / r) / (r ** 2)  # Gravitational force direction and magnitude
+    return -g_param * (position / r) / (r ** power)  # Gravitational force direction and magnitude
 
 def add_trace_point():
     """Update state based on current acceleration and add the position to trace."""
     # Update acceleration with a new random vector
     state.acceleration = random_acceleration()
-    state.acceleration += gravitational_acceleration(state.position)
+    state.acceleration += gravitational_acceleration(state.position, g_param=25, power=2)
+    state.acceleration += gravitational_acceleration(state.position, g_param=-12, power=3)
 
     # Euler integration to update velocity and position
     state.velocity += state.acceleration * speed  # v = v + a * dt
@@ -62,9 +63,35 @@ def add_trace_point():
 def draw_trace():
     """Draw the trace as a series of lines between consecutive points."""
     glBegin(GL_LINE_STRIP)  # GL_LINE_STRIP to connect points with a continuous line
-    glColor3f(1, 0, 0)  # Set line color to red
+    glColor3f(1, 1, 1)
     for point in trace_points:
         glVertex3fv(point)
+    glEnd()
+
+def draw_axes():
+    # Pastel colors for X, Y, Z axes
+    pastel_red = (1.0, 0.6, 0.6)    # X-axis
+    pastel_green = (0.6, 1.0, 0.6)  # Y-axis
+    pastel_blue = (0.6, 0.6, 1.0)   # Z-axis
+    length = 10.0
+
+    glBegin(GL_LINES)
+    
+    # X-axis (red)
+    glColor3fv(pastel_red)
+    glVertex3f(0, 0, 0)
+    glVertex3f(length, 0, 0)
+    
+    # Y-axis (green)
+    glColor3fv(pastel_green)
+    glVertex3f(0, 0, 0)
+    glVertex3f(0, length, 0)
+    
+    # Z-axis (blue)
+    glColor3fv(pastel_blue)
+    glVertex3f(0, 0, 0)
+    glVertex3f(0, 0, length)
+
     glEnd()
 
 def main():
@@ -77,12 +104,20 @@ def main():
     rotate_x, rotate_y = 0, 0
     zoom = -5.0
     # Set perspective and view
-    gluPerspective(45, (display[0] / display[1]), 0.1, 50.0)
-    gluLookAt(R, R, R, 0, 0, 0, 0, 1, 0)
-
-    while True:
+    def set_defaults():
+        nonlocal R, rotate_x, rotate_y
+        R = 25
         rotate_x, rotate_y = 0, 0
 
+    def apply_views():
+        glLoadIdentity()  # Reset transformations
+        max_clip_dist = 150
+        gluPerspective(45, (display[0] / display[1]), 0.1, max_clip_dist)
+        gluLookAt(R, R, R, 0, 0, 0, 0, 1, 0)
+        glRotatef(rotate_x, 1, 0, 0)
+        glRotatef(rotate_y, 0, 1, 0)
+
+    while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
@@ -98,6 +133,10 @@ def main():
                     R += 0.5
                 elif event.button == 5:  # Scroll down
                     R -= 0.5
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_r:  # Check if 'R' key is pressed
+                    print("R key pressed!")
+                    set_defaults()
 
         # Add a new point to the trace based on the evolving state
         add_trace_point()
@@ -108,12 +147,11 @@ def main():
         # gluLookAt(R, R, R, 0, 0, 0, 0, 1, 0)
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
-        glRotatef(rotate_x, 1, 0, 0)
-        glRotatef(rotate_y, 0, 1, 0)
-
+        apply_views()
 
         draw_trace()
-        
+        draw_axes()
+
         pygame.display.flip()
         pygame.time.wait(10)
 
