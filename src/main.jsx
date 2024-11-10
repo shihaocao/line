@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'; // Import OrbitControls
+import Body from './body.jsx'
 
 // Set up the scene, camera, and renderer
 const scene = new THREE.Scene();
@@ -33,31 +34,6 @@ scene.add(directionalLight);
 // -----
 // import * as THREE from 'three';
 
-class Body {
-  constructor(position, velocity, color, mass, scene) {
-    this.position = new THREE.Vector3().copy(position);
-    this.velocity = new THREE.Vector3().copy(velocity);
-    this.acceleration = new THREE.Vector3();
-    this.mass = mass;
-    this.color = color;
-    this.points = [this.position.clone()]; // Initial point in trajectory
-
-    // Create a sphere to represent the body
-    const geometry = new THREE.SphereGeometry(0.1, 32, 32);
-    const material = new THREE.MeshBasicMaterial({ color: this.color });
-    this.mesh = new THREE.Mesh(geometry, material);
-    this.mesh.position.copy(this.position);
-    scene.add(this.mesh); // Add to scene once
-
-  }
-
-  update(dt) {
-    this.velocity.add(this.acceleration.clone().multiplyScalar(dt));
-    this.position.add(this.velocity.clone().multiplyScalar(dt));
-    this.mesh.position.copy(this.position); // Update Three.js mesh position
-
-  }
-}
 
 class System {
   constructor(bodies, scene) {
@@ -91,10 +67,9 @@ class System {
 // Example usage
 
 const bodies = [
-  new Body(new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 0, 0), 0xff0000, 10000, scene),
-  new Body(new THREE.Vector3(2, 0, 0), new THREE.Vector3(0, 0.6, 0), 0x0000ff, 1000, scene),
-  new Body(new THREE.Vector3(1, 1, 1), new THREE.Vector3(0, -0.7, 0), 0x00ffff, 1000, scene),
-
+  new Body(new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 0, 0), 0xff0000, 5000, scene),
+  new Body(new THREE.Vector3(2, 0, 0), new THREE.Vector3(0, 0.4, 0), 0x0000ff, 1000, scene),
+  new Body(new THREE.Vector3(1, 1, 1), new THREE.Vector3(0, -0.3, 0), 0xffffff, 1000, scene),
 ];
 
 const system = new System(bodies, scene);
@@ -102,7 +77,7 @@ const system = new System(bodies, scene);
 let lastTime = performance.now();
 const targetFPS = 60;
 const timeStep = 1 / targetFPS; // Fixed time step (in seconds)
-const timeStepMultiple = 3.0;
+const timeStepMultiple = 10.0;
 
 function animate() {
   requestAnimationFrame(animate);
