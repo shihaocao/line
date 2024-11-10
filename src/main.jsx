@@ -5,7 +5,7 @@ import Body from './body.jsx'
 // Set up the scene, camera, and renderer
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.position.z = 10;
+camera.position.z = 6;
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
@@ -64,13 +64,18 @@ class System {
   }
 }
 
-// Example usage
-
 const bodies = [
-  new Body(new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 0, 0), 0xff0000, 5000, scene),
-  new Body(new THREE.Vector3(2, 0, 0), new THREE.Vector3(0, 0.4, 0), 0x0000ff, 1000, scene),
-  new Body(new THREE.Vector3(1, 1, 1), new THREE.Vector3(0, -0.3, 0), 0xffffff, 1000, scene),
+  new Body(new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 0, 0), 0xff0000, 5000, scene, true, true),
+  new Body(new THREE.Vector3(2, 0, 0), new THREE.Vector3(0, 0.4, 0), 0x0000ff, 1000, scene, true, true),
+  new Body(new THREE.Vector3(1, 1, 1), new THREE.Vector3(0, -0.3, 0), 0xffffff, 1000, scene, true, true),
 ];
+
+// const bodies = [
+//   new Body(new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 0, 0), 0xff0000, 5000, scene, false, false),
+//   new Body(new THREE.Vector3(2, 0, 0), new THREE.Vector3(0, 0.4, 0), 0x0000ff, 1000, scene, false, false),
+//   new Body(new THREE.Vector3(1, 1, 1), new THREE.Vector3(0, -0.3, 0), 0xffffff, 1000, scene, true, true),
+// ];
+
 
 const system = new System(bodies, scene);
 
