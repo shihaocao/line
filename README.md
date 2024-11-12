@@ -28,3 +28,9 @@ I've taken the time to basically create an orbit simulation. One theory I had to
 But I think the real issue is actually energy. It is too easy to "eject" a few bodies out to infinity because it will have positive energy.
 I think I will try implementing a system where energy is capped at some small negative value. I think I can implement this by saying, if an interaction would increase a bodies energy over the limit, do not transfer the energy. This should also prevent a body from having all of its energy robbed.
 
+---
+
+So I implemented an energy limiting. I made a slight algorithimic change to, if you are over the energy limit, and an interaction would increase the energy further, don't do the interaction. I felt like I was still seeing weird things though so I printed total system energy and it was not constant. I will have to look at this deeper. It looks like energy
+isn't constant even with energy limiting off.
+
+Nonetheless the graphics are cool and we aren't launching projectiles out of orbit!

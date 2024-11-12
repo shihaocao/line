@@ -3,6 +3,7 @@ import * as THREE from 'three';
 export default class Body {
     enable_sphere: boolean;
     enable_trace: boolean;
+    enable_anchor: boolean;
     position: THREE.Vector3;
     velocity: THREE.Vector3;
     acceleration: THREE.Vector3;
@@ -100,9 +101,10 @@ export default class Body {
 
     update(dt: number): void {
         this.velocity.add(this.acceleration.clone().multiplyScalar(dt));
-        if(!this.enable_anchor) {
-            this.position.add(this.velocity.clone().multiplyScalar(dt));
+        if(this.enable_anchor) {
+            this.velocity = new THREE.Vector3(0,0,0);
         }
+        this.position.add(this.velocity.clone().multiplyScalar(dt));
 
         this.mesh.position.copy(this.position);
 
@@ -136,5 +138,11 @@ export default class Body {
         this.traceGeometry1.attributes.opacity.needsUpdate = true;
         this.traceGeometry2.attributes.position.needsUpdate = true;
         this.traceGeometry2.attributes.opacity.needsUpdate = true;
+    }
+
+    // New method to calculate kinetic energy
+    calculateKineticEnergy(): number {
+        const speed = this.velocity.length();
+        return 0.5 * this.mass * speed * speed;
     }
 }

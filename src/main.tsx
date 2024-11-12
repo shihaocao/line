@@ -92,7 +92,6 @@ axesHelper.setColors(
 scene.add(axesHelper);
 
 const system = new System(bodies, scene);
-const restrainer_system = new RestrainerSystem(bodies, 5);
 
 function bodies_update(bodies: Body[], dt: number) {
     // Update each body based on its updated acceleration
