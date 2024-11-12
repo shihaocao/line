@@ -23,7 +23,7 @@ You can launch the dev environment via `npx vite` and it animates nicely. I like
 
 I've taken the time to basically create an orbit simulation. One theory I had to make it look better was to make sure the whole system started with a nonzero angularmomentum. Where as if I randomly set it across a large sample, the angular momentum would be near zero sometimes. It looks nice.
 
-![With Axes and Orbit](documentation/orbits.gifs)
+![With Axes and Orbit](documentation/orbits.gif)
 
 But I think the real issue is actually energy. It is too easy to "eject" a few bodies out to infinity because it will have positive energy.
 I think I will try implementing a system where energy is capped at some small negative value. I think I can implement this by saying, if an interaction would increase a bodies energy over the limit, do not transfer the energy. This should also prevent a body from having all of its energy robbed.
