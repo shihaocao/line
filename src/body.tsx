@@ -1,32 +1,58 @@
 import * as THREE from 'three';
 
 export default class Body {
-    constructor(position, velocity, color, mass, scene, enable_sphere, enable_trace) {
-        this.enable_sphere = enable_sphere
-        this.enable_trace = enable_trace
+    enable_sphere: boolean;
+    enable_trace: boolean;
+    position: THREE.Vector3;
+    velocity: THREE.Vector3;
+    acceleration: THREE.Vector3;
+    mass: number;
+    color: number;
+    maxPoints: number;
+    currentPointIndex: number;
+    totalPoints: number;
+    mesh: THREE.Mesh;
+    positionsArray: Float32Array;
+    opacityArray: Float32Array;
+    traceGeometry1: THREE.BufferGeometry;
+    traceGeometry2: THREE.BufferGeometry;
+    traceMaterial: THREE.ShaderMaterial;
+    trace1: THREE.Line;
+    trace2: THREE.Line;
+
+    constructor(
+        position: THREE.Vector3,
+        velocity: THREE.Vector3,
+        color: number,
+        mass: number,
+        scene: THREE.Scene,
+        enable_sphere: boolean,
+        enable_trace: boolean
+    ) {
+        this.enable_sphere = enable_sphere;
+        this.enable_trace = enable_trace;
         this.position = new THREE.Vector3().copy(position);
         this.velocity = new THREE.Vector3().copy(velocity);
         this.acceleration = new THREE.Vector3();
         this.mass = mass;
         this.color = color;
-        this.maxPoints = 500; // Maximum number of points to keep in the trace
-        this.currentPointIndex = 0; // Keeps track of the current index in the circular buffer
-        this.totalPoints = 0; // Keeps track of how many points have been added
+        this.maxPoints = 500;
+        this.currentPointIndex = 0;
+        this.totalPoints = 0;
 
         // Create a sphere to represent the body
         const geometry = new THREE.SphereGeometry(0.1, 32, 32);
         const material = new THREE.MeshBasicMaterial({ color: this.color });
         this.mesh = new THREE.Mesh(geometry, material);
         this.mesh.position.copy(this.position);
-        
-        if( this.enable_sphere) {
-   
-            scene.add(this.mesh); // Add to scene once
+
+        if (this.enable_sphere) {
+            scene.add(this.mesh);
         }
 
         // Create a shared array for positions
-        this.positionsArray = new Float32Array(this.maxPoints * 3); // Preallocate the buffer
-        this.opacityArray = new Float32Array(this.maxPoints); // Array for opacity values
+        this.positionsArray = new Float32Array(this.maxPoints * 3);
+        this.opacityArray = new Float32Array(this.maxPoints);
 
         // Create two geometries using the same positions array
         this.traceGeometry1 = new THREE.BufferGeometry();
@@ -58,26 +84,23 @@ export default class Body {
             uniforms: {
                 color: { value: new THREE.Color(this.color) }
             },
-            transparent: true // Allow transparency
+            transparent: true
         });
 
         this.trace1 = new THREE.Line(this.traceGeometry1, this.traceMaterial);
         this.trace2 = new THREE.Line(this.traceGeometry2, this.traceMaterial);
 
-        if(this.enable_trace){
+        if (this.enable_trace) {
             scene.add(this.trace1);
             scene.add(this.trace2);
         }
-
     }
 
-    update(dt) {
-        // Update the position and velocity
+    update(dt: number): void {
         this.velocity.add(this.acceleration.clone().multiplyScalar(dt));
         this.position.add(this.velocity.clone().multiplyScalar(dt));
-        this.mesh.position.copy(this.position); // Update Three.js mesh position
+        this.mesh.position.copy(this.position);
 
-        // Update the current point in the buffer geometry
         this.positionsArray[this.currentPointIndex * 3] = this.position.x;
         this.positionsArray[this.currentPointIndex * 3 + 1] = this.position.y;
         this.positionsArray[this.currentPointIndex * 3 + 2] = this.position.z;
@@ -85,31 +108,25 @@ export default class Body {
         // Update opacity values based on age of the point
         for (let i = 0; i < this.maxPoints; i++) {
             const age = (this.maxPoints + this.currentPointIndex - i) % this.maxPoints;
-            this.opacityArray[i] = 1 - age / this.maxPoints; // Opacity decreases with age
+            this.opacityArray[i] = 1 - age / this.maxPoints;
         }
 
         // Increment the index and wrap around if necessary (circular buffer)
         this.currentPointIndex = (this.currentPointIndex + 1) % this.maxPoints;
-
-        // Update the total number of points (caps at maxPoints)
         this.totalPoints = Math.min(this.totalPoints + 1, this.maxPoints);
 
         // Update the draw ranges
         if (this.totalPoints < this.maxPoints) {
-            // If we haven't filled the buffer yet, draw from 0 to totalPoints on trace1
             this.traceGeometry1.setDrawRange(0, this.totalPoints);
-            this.traceGeometry2.setDrawRange(0, 0); // No second segment yet
+            this.traceGeometry2.setDrawRange(0, 0);
         } else {
-            // Draw from currentPointIndex to the end on trace1
             const segment1Length = this.maxPoints - this.currentPointIndex;
             this.traceGeometry1.setDrawRange(this.currentPointIndex, segment1Length);
 
-            // Draw from start to currentPointIndex on trace2
             const segment2Length = this.currentPointIndex;
             this.traceGeometry2.setDrawRange(0, segment2Length);
         }
 
-        // Mark the attributes as needing an update
         this.traceGeometry1.attributes.position.needsUpdate = true;
         this.traceGeometry1.attributes.opacity.needsUpdate = true;
         this.traceGeometry2.attributes.position.needsUpdate = true;
