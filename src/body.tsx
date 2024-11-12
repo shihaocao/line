@@ -27,16 +27,18 @@ export default class Body {
         mass: number,
         scene: THREE.Scene,
         enable_sphere: boolean,
-        enable_trace: boolean
+        enable_trace: boolean,
+        enable_anchor: boolean,
     ) {
         this.enable_sphere = enable_sphere;
         this.enable_trace = enable_trace;
+        this.enable_anchor = enable_anchor;
         this.position = new THREE.Vector3().copy(position);
         this.velocity = new THREE.Vector3().copy(velocity);
         this.acceleration = new THREE.Vector3();
         this.mass = mass;
         this.color = color;
-        this.maxPoints = 500;
+        this.maxPoints = 10000;
         this.currentPointIndex = 0;
         this.totalPoints = 0;
 
@@ -98,7 +100,10 @@ export default class Body {
 
     update(dt: number): void {
         this.velocity.add(this.acceleration.clone().multiplyScalar(dt));
-        this.position.add(this.velocity.clone().multiplyScalar(dt));
+        if(!this.enable_anchor) {
+            this.position.add(this.velocity.clone().multiplyScalar(dt));
+        }
+
         this.mesh.position.copy(this.position);
 
         this.positionsArray[this.currentPointIndex * 3] = this.position.x;
