@@ -34,3 +34,13 @@ So I implemented an energy limiting. I made a slight algorithimic change to, if 
 isn't constant even with energy limiting off.
 
 Nonetheless the graphics are cool and we aren't launching projectiles out of orbit!
+
+## 11/12
+
+It turns out that the concept of an energy limit, or a speed limit on the particles is deeply non physical, since this would let it travel into an area of lower gravitational potential without accelerating its KE. This leaves us with the potential for getting trapped in lower energy states as we enter a very tight orbit.
+
+![Energy Limit Not Working](documentation/energy_limit_not_working.png)
+
+I think my next plan for a cool animation would be some sort of:
+
+Faux drag force making sure we never accelerate off into the distance, and then an energy balancer. If the system loses too much energy add a bit more in. This should put us in stable equilibrium but not send us to infinity.

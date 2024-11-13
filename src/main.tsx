@@ -73,12 +73,13 @@ function generateRandomBodiesWithAngularMomentum(N: number, totalAngularMomentum
 }
 
 // Add the central fixed "sun" body
-const sunMass = 1000;
-const sun = new Body(new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 0, 0), 0xffcc00, sunMass, scene, true, true, true);
+const sunMass = 1e3;
+const sun = new Body(new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 0, 0), 0xffcc00, sunMass, scene, true, true, false);
 bodies.push(sun);
 
+// bodies.push(new Body(new THREE.Vector3(1, 0, 0), new THREE.Vector3(0, 0.8, 0), 0xffcc00, sunMass, scene, true, true, false));
 // Usage
-const N = 3; // Number of orbiting bodies
+const N = 2; // Number of orbiting bodies
 const totalAngularMomentum = 1000 * N; // Desired total angular momentum
 generateRandomBodiesWithAngularMomentum(N, totalAngularMomentum, scene);
 
