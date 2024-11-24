@@ -50,12 +50,12 @@ function generateRandomBodiesWithAngularMomentum(N: number, totalAngularMomentum
         // Random position within a radius of 10 units
         const position = new THREE.Vector3(
             (rng() - 0.5) * 5,
-            (rng() - 0.5) * 5,
-            (rng() - 0.5) * 1
+            (rng() - 0.5) * 1,
+            (rng() - 0.5) * 5
         );
 
         // Mass between 1000 and 2000
-        const mass = 1000 + rng() * 1000;
+        const mass = 3 * (100 + rng() * 300);
 
         // Calculate velocity for the required angular momentum L = r x (m * v)
         const angularMomentum = angularMomentumPortions[i];
@@ -63,7 +63,7 @@ function generateRandomBodiesWithAngularMomentum(N: number, totalAngularMomentum
         const speed = angularMomentum / (mass * radius);
 
         // Velocity direction perpendicular to the radius vector for circular motion
-        const velocity = new THREE.Vector3(-position.y, position.x, 0).normalize().multiplyScalar(speed);
+        const velocity = new THREE.Vector3(-position.y, 0, position.z).normalize().multiplyScalar(speed);
 
         // Pastel color
         const color = getRandomPastelColor();
@@ -73,14 +73,14 @@ function generateRandomBodiesWithAngularMomentum(N: number, totalAngularMomentum
 }
 
 // Add the central fixed "sun" body
-const sunMass = 1e3;
-const sun = new Body(new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 0, 0), 0xffcc00, sunMass, scene, true, true, false);
-bodies.push(sun);
+const sunMass = 1e1;
+const sun = new Body(new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 0, 0), 0xffcc00, sunMass, scene, true, true, true);
+// bodies.push(sun);
 
 // bodies.push(new Body(new THREE.Vector3(1, 0, 0), new THREE.Vector3(0, 0.8, 0), 0xffcc00, sunMass, scene, true, true, false));
 // Usage
-const N = 2; // Number of orbiting bodies
-const totalAngularMomentum = 1000 * N; // Desired total angular momentum
+const N = 3; // Number of orbiting bodies
+const totalAngularMomentum = 2 * 1000 * N; // Desired total angular momentum
 generateRandomBodiesWithAngularMomentum(N, totalAngularMomentum, scene);
 
 // Axes helper
@@ -93,17 +93,6 @@ axesHelper.setColors(
 scene.add(axesHelper);
 
 const system = new System(bodies, scene);
-
-function bodies_update(bodies: Body[], dt: number) {
-    // Update each body based on its updated acceleration
-    bodies.forEach(body => body.update(dt));
-
-    // Reset accelerations after the update
-    for (let i = 0; i < bodies.length; i++) {
-        const bodyA = bodies[i];
-        bodyA.acceleration.set(0, 0, 0);
-    }
-}
 
 let lastTime = performance.now();
 const targetFPS = 60;
@@ -132,7 +121,6 @@ function animate() {
     // Run multiple physics updates within each animation frame
     for (let i = 0; i < physicsUpdatesPerFrame; i++) {
         system.update(physicsTimeStep);
-        bodies_update(bodies, physicsTimeStep);
     }
 
     lastTime = currentTime;

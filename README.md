@@ -44,3 +44,6 @@ It turns out that the concept of an energy limit, or a speed limit on the partic
 I think my next plan for a cool animation would be some sort of:
 
 Faux drag force making sure we never accelerate off into the distance, and then an energy balancer. If the system loses too much energy add a bit more in. This should put us in stable equilibrium but not send us to infinity.
+
+Here is my final animation without energy limiting:
+![With Axes and Orbit Finished](documentation/finished-orbits.gif)
