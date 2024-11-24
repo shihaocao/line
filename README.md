@@ -47,3 +47,13 @@ Faux drag force making sure we never accelerate off into the distance, and then 
 
 Here is my final animation without energy limiting:
 ![With Axes and Orbit Finished](documentation/finished-orbits.gif)
+
+## 11/24
+
+Today I added snow, it is a bit cheap, it is just a hexagon (circle with 6 points). I think the snow looks nice. I also hid the other bodies driving the physics, and I really like how natural and alive that one line looks.
+
+I tried increasing the line thickness but I couldn't get it to work faster so skipped ahead to the snow.
+
+![Just a line with snow](documentation/line_snow.gif)
+
+

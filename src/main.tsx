@@ -3,6 +3,8 @@ import seedrandom from 'seedrandom';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import Body from './body.tsx';
 import { System, RestrainerSystem } from './system.tsx';
+import SnowEffect from './snow.tsx';
+
 
 // Set up the seeded random generator
 const rng = seedrandom(123);
@@ -68,13 +70,18 @@ function generateRandomBodiesWithAngularMomentum(N: number, totalAngularMomentum
         // Pastel color
         const color = getRandomPastelColor();
 
-        bodies.push(new Body(position, velocity, color, mass, scene, true, true, false));
+        let vis = false;
+        if(i == 0) {
+            vis = true;
+        }
+
+        bodies.push(new Body(position, velocity, color, mass, scene, false, vis, false));
     }
 }
 
 // Add the central fixed "sun" body
 const sunMass = 1e1;
-const sun = new Body(new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 0, 0), 0xffcc00, sunMass, scene, true, true, true);
+const sun = new Body(new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 0, 0), 0xffcc00, sunMass, scene, false, false, false);
 // bodies.push(sun);
 
 // bodies.push(new Body(new THREE.Vector3(1, 0, 0), new THREE.Vector3(0, 0.8, 0), 0xffcc00, sunMass, scene, true, true, false));
@@ -82,6 +89,10 @@ const sun = new Body(new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 0, 0), 0xf
 const N = 3; // Number of orbiting bodies
 const totalAngularMomentum = 2 * 1000 * N; // Desired total angular momentum
 generateRandomBodiesWithAngularMomentum(N, totalAngularMomentum, scene);
+
+// SNOW
+const snowEffect = new SnowEffect(scene);
+
 
 // Axes helper
 const axesHelper = new THREE.AxesHelper(10);
@@ -102,7 +113,9 @@ const physicsMultiplier = 1;
 const physicsTimeStep = physicsMultiplier * timeStep / physicsUpdatesPerFrame;
 
 let controlsLastUsedTime = performance.now();
-const rotationSpeed = 0.01;
+const rotationSpeed = 0.005;
+// const rotationSpeed = 0;
+
 
 // Event listeners for controls
 controls.addEventListener('start', () => {
@@ -130,6 +143,8 @@ function animate() {
         camera.position.applyAxisAngle(new THREE.Vector3(0, 1, 0), rotationSpeed);
         camera.lookAt(scene.position);
     }
+
+    snowEffect.update();
 
     // Render the scene at 60 FPS
     renderer.render(scene, camera);
