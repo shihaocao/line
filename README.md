@@ -56,4 +56,3 @@ I tried increasing the line thickness but I couldn't get it to work faster so sk
 
 ![Just a line with snow](documentation/line_snow.gif)
 
-

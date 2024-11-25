@@ -44,7 +44,7 @@ export default class Body {
         this.totalPoints = 0;
 
         // Create a sphere to represent the body
-        const geometry = new THREE.SphereGeometry(0.1, 32, 32);
+        const geometry = new THREE.SphereGeometry(0.06, 32, 32);
         const material = new THREE.MeshBasicMaterial({ color: this.color });
         this.mesh = new THREE.Mesh(geometry, material);
         this.mesh.position.copy(this.position);

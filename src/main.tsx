@@ -7,7 +7,9 @@ import SnowEffect from './snow.tsx';
 
 
 // Set up the seeded random generator
-const rng = seedrandom(123);
+const rng = seedrandom(3);
+let debug = false;
+debug = true;
 
 // Set up the scene, camera, and renderer
 const scene = new THREE.Scene();
@@ -20,12 +22,12 @@ document.body.appendChild(renderer.domElement);
 
 const controls = new OrbitControls(camera, renderer.domElement);
 
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-scene.add(ambientLight);
+// const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+// scene.add(ambientLight);
 
-const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-directionalLight.position.set(5, 5, 5).normalize();
-scene.add(directionalLight);
+// const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+// directionalLight.position.set(5, 5, 5).normalize();
+// scene.add(directionalLight);
 
 function getRandomPastelColor(): number {
     const hue = rng(); // Random hue between 0 and 1
@@ -68,20 +70,29 @@ function generateRandomBodiesWithAngularMomentum(N: number, totalAngularMomentum
         const velocity = new THREE.Vector3(-position.y, 0, position.z).normalize().multiplyScalar(speed);
 
         // Pastel color
-        const color = getRandomPastelColor();
+        let color = new THREE.Color(0xffffff); // White
 
-        let vis = false;
-        if(i == 0) {
-            vis = true;
+        if(debug) {
+            color = getRandomPastelColor();
         }
 
-        bodies.push(new Body(position, velocity, color, mass, scene, false, vis, false));
+        let vis = true;
+        if(!debug && i != 0) {
+            vis = false;
+        }
+
+        let vis_body = false;
+        if(debug) {
+            vis_body = true;
+        }
+
+        bodies.push(new Body(position, velocity, color, mass, scene, vis_body, vis, false));
     }
 }
 
 // Add the central fixed "sun" body
 const sunMass = 1e1;
-const sun = new Body(new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 0, 0), 0xffcc00, sunMass, scene, false, false, false);
+const sun = new Body(new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 0, 0), 0xffcc00, sunMass, scene, debug, false, false);
 // bodies.push(sun);
 
 // bodies.push(new Body(new THREE.Vector3(1, 0, 0), new THREE.Vector3(0, 0.8, 0), 0xffcc00, sunMass, scene, true, true, false));
@@ -95,13 +106,13 @@ const snowEffect = new SnowEffect(scene);
 
 
 // Axes helper
-const axesHelper = new THREE.AxesHelper(10);
-axesHelper.setColors(
-    new THREE.Color(1.0, 0.6, 0.6),  // X-axis (red)
-    new THREE.Color(0.6, 1.0, 0.6),  // Y-axis (green)
-    new THREE.Color(0.6, 0.6, 1.0)   // Z-axis (blue)
-);
-scene.add(axesHelper);
+// const axesHelper = new THREE.AxesHelper(10);
+// axesHelper.setColors(
+//     new THREE.Color(1.0, 0.6, 0.6),  // X-axis (red)
+//     new THREE.Color(0.6, 1.0, 0.6),  // Y-axis (green)
+//     new THREE.Color(0.6, 0.6, 1.0)   // Z-axis (blue)
+// );
+// scene.add(axesHelper);
 
 const system = new System(bodies, scene);
 

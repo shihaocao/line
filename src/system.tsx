@@ -96,7 +96,7 @@ export class System {
             //     speed_penalty = (speed**2);
             // }
             // const dist_penalty = 1;
-            const dist_penalty = 5 * dist_from_origin;
+            const dist_penalty = 2 * dist_from_origin;
             // const speed_penalty = 1;
             const force_magnitude = speed_penalty * dist_penalty * this.drag_coeff;
             const force = direction.multiplyScalar(force_magnitude).negate();
