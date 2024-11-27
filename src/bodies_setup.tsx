@@ -79,7 +79,7 @@ export function setupBodiesAndSun(scene: THREE.Scene): Body[] {
 
     // Generate orbiting bodies
     const N = 3;
-    const totalAngularMomentum = 2 * 1000 * N;
+    const totalAngularMomentum = 3 * 1000 * N;
     generateRandomBodiesWithAngularMomentum(N, totalAngularMomentum);
 
     return bodies;
