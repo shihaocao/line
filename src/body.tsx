@@ -4,6 +4,7 @@ export default class Body {
     enable_sphere: boolean;
     enable_trace: boolean;
     enable_anchor: boolean;
+    enable_light: boolean;
     position: THREE.Vector3;
     velocity: THREE.Vector3;
     acceleration: THREE.Vector3;
@@ -20,6 +21,7 @@ export default class Body {
     traceMaterial: THREE.ShaderMaterial;
     trace1: THREE.Line;
     trace2: THREE.Line;
+    light: THREE.PointLight | null;
 
     constructor(
         position: THREE.Vector3,
@@ -30,10 +32,12 @@ export default class Body {
         enable_sphere: boolean,
         enable_trace: boolean,
         enable_anchor: boolean,
+        enable_light: boolean
     ) {
         this.enable_sphere = enable_sphere;
         this.enable_trace = enable_trace;
         this.enable_anchor = enable_anchor;
+        this.enable_light = enable_light;
         this.position = new THREE.Vector3().copy(position);
         this.velocity = new THREE.Vector3().copy(velocity);
         this.acceleration = new THREE.Vector3();
@@ -44,7 +48,9 @@ export default class Body {
         this.totalPoints = 0;
 
         // Create a sphere to represent the body
-        const geometry = new THREE.SphereGeometry(0.06, 32, 32);
+        let size = 0.01;
+        // size = 0.10;
+        const geometry = new THREE.SphereGeometry(size, 32, 32);
         const material = new THREE.MeshBasicMaterial({ color: this.color });
         this.mesh = new THREE.Mesh(geometry, material);
         this.mesh.position.copy(this.position);
@@ -97,16 +103,30 @@ export default class Body {
             scene.add(this.trace1);
             scene.add(this.trace2);
         }
+
+        // Create a point light that follows the body
+        if (this.enable_light) {
+            this.light = new THREE.PointLight(this.color, 50, 10); // Intensity: 1, Distance: 10
+            this.light.position.copy(this.position);
+            scene.add(this.light);
+        } else {
+            this.light = null;
+        }
     }
 
     update(dt: number): void {
         this.velocity.add(this.acceleration.clone().multiplyScalar(dt));
-        if(this.enable_anchor) {
-            this.velocity = new THREE.Vector3(0,0,0);
+        if (this.enable_anchor) {
+            this.velocity = new THREE.Vector3(0, 0, 0);
         }
         this.position.add(this.velocity.clone().multiplyScalar(dt));
 
         this.mesh.position.copy(this.position);
+
+        // Update light position if enabled
+        if (this.light) {
+            this.light.position.copy(this.position);
+        }
 
         this.positionsArray[this.currentPointIndex * 3] = this.position.x;
         this.positionsArray[this.currentPointIndex * 3 + 1] = this.position.y;

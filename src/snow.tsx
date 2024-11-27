@@ -1,13 +1,13 @@
 import * as THREE from 'three';
 
-const range = 20;
-const y_range = 60;
+const range = 10;
+const y_range = 30;
 const fall_speed = 0.008;
 const floor_height = -2.2;
-const particleCount = 12000;
+const particleCount = 3000;
 const particle_dim = 0.02;
 const rotation_multiplier = 0.1;
-const stationary_duration = 9000; // Number of updates to stay on the ground
+const stationary_duration = 4000; // Number of updates to stay on the ground
 
 class SnowEffect {
     private snowflakes: THREE.InstancedMesh;
@@ -22,11 +22,13 @@ class SnowEffect {
     constructor(scene: THREE.Scene) {
         // Create custom snowflake geometry
         const snowflakeGeometry = new THREE.CircleGeometry(particle_dim, 6);
-        const snowflakeMaterial = new THREE.MeshBasicMaterial({
-            color: 0xffffff,
+        const snowflakeMaterial = new THREE.MeshStandardMaterial({
+            color: 0xaaaaaa,
             side: THREE.DoubleSide,
             transparent: true,
             opacity: 0.8,
+            roughness: 0.5, // Adjust for a matte look
+            metalness: 0.0, // Set to 0 for a non-metallic look
         });
 
         this.snowflakes = new THREE.InstancedMesh(snowflakeGeometry, snowflakeMaterial, particleCount);
@@ -67,12 +69,12 @@ class SnowEffect {
         scene.add(this.ground);
 
         // Create and add a light source
-        this.light = this.createLight();
-        scene.add(this.light);
+        // this.light = this.createLight();
+        // scene.add(this.light);
     }
 
     private createGround(): THREE.Mesh {
-        const groundGeometry = new THREE.PlaneGeometry(range * 2, range * 2);
+        const groundGeometry = new THREE.PlaneGeometry(range * 4, range * 4);
         const groundMaterial = new THREE.MeshStandardMaterial({
             color: 0x333333, // Dark gray base color
             roughness: 0.8,  // Matte surface
@@ -86,7 +88,7 @@ class SnowEffect {
     }
 
     private createLight(): THREE.PointLight {
-        const light = new THREE.PointLight(0xffffff, 50, 50000); // Bright white light
+        const light = new THREE.PointLight(0xffffff, 20, 50000); // Bright white light
         light.position.set(0, 2, 0); // Position the light above the ground
         light.castShadow = true;     // Enable shadows
         light.shadow.mapSize.width = 1024;

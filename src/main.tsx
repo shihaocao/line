@@ -1,15 +1,8 @@
 import * as THREE from 'three';
-import seedrandom from 'seedrandom';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import Body from './body.tsx';
-import { System, RestrainerSystem } from './system.tsx';
+import { System } from './system.tsx';
 import SnowEffect from './snow.tsx';
-
-
-// Set up the seeded random generator
-const rng = seedrandom(3);
-let debug = false;
-debug = true;
+import { setupBodiesAndSun } from './bodies_setup.tsx'; // Import the setup function
 
 // Set up the scene, camera, and renderer
 const scene = new THREE.Scene();
@@ -22,111 +15,23 @@ document.body.appendChild(renderer.domElement);
 
 const controls = new OrbitControls(camera, renderer.domElement);
 
-// const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-// scene.add(ambientLight);
-
-// const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-// directionalLight.position.set(5, 5, 5).normalize();
-// scene.add(directionalLight);
-
-function getRandomPastelColor(): number {
-    const hue = rng(); // Random hue between 0 and 1
-    const saturation = 0.5 + rng() * 0.3; // Saturation around 50-80%
-    const lightness = 0.8 + rng() * 0.2; // Lightness around 80-100%
-    const color = new THREE.Color().setHSL(hue, saturation, lightness);
-    return color.getHex();
-}
-
-const bodies: Body[] = [];
-
-function generateRandomBodiesWithAngularMomentum(N: number, totalAngularMomentum: number, scene: THREE.Scene): Body[] {
-
-    // Calculate the angular momentum portion for each body
-    const angularMomentumPortions = Array.from({ length: N }, () => rng() * 0.1 + 0.9);
-    const totalPortion = angularMomentumPortions.reduce((sum, portion) => sum + portion, 0);
-
-    // Scale portions to match the specified total angular momentum
-    angularMomentumPortions.forEach((portion, index) => {
-        angularMomentumPortions[index] = (portion / totalPortion) * totalAngularMomentum;
-    });
-
-    for (let i = 0; i < N; i++) {
-        // Random position within a radius of 10 units
-        const position = new THREE.Vector3(
-            (rng() - 0.5) * 5,
-            (rng() - 0.5) * 1,
-            (rng() - 0.5) * 5
-        );
-
-        // Mass between 1000 and 2000
-        const mass = 3 * (100 + rng() * 300);
-
-        // Calculate velocity for the required angular momentum L = r x (m * v)
-        const angularMomentum = angularMomentumPortions[i];
-        const radius = position.length();
-        const speed = angularMomentum / (mass * radius);
-
-        // Velocity direction perpendicular to the radius vector for circular motion
-        const velocity = new THREE.Vector3(-position.y, 0, position.z).normalize().multiplyScalar(speed);
-
-        // Pastel color
-        let color = new THREE.Color(0xffffff); // White
-
-        if(debug) {
-            color = getRandomPastelColor();
-        }
-
-        let vis = true;
-        if(!debug && i != 0) {
-            vis = false;
-        }
-
-        let vis_body = false;
-        if(debug) {
-            vis_body = true;
-        }
-
-        bodies.push(new Body(position, velocity, color, mass, scene, vis_body, vis, false));
-    }
-}
-
-// Add the central fixed "sun" body
-const sunMass = 1e1;
-const sun = new Body(new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 0, 0), 0xffcc00, sunMass, scene, debug, false, false);
-// bodies.push(sun);
-
-// bodies.push(new Body(new THREE.Vector3(1, 0, 0), new THREE.Vector3(0, 0.8, 0), 0xffcc00, sunMass, scene, true, true, false));
-// Usage
-const N = 3; // Number of orbiting bodies
-const totalAngularMomentum = 2 * 1000 * N; // Desired total angular momentum
-generateRandomBodiesWithAngularMomentum(N, totalAngularMomentum, scene);
-
-// SNOW
-const snowEffect = new SnowEffect(scene);
-
-
-// Axes helper
-// const axesHelper = new THREE.AxesHelper(10);
-// axesHelper.setColors(
-//     new THREE.Color(1.0, 0.6, 0.6),  // X-axis (red)
-//     new THREE.Color(0.6, 1.0, 0.6),  // Y-axis (green)
-//     new THREE.Color(0.6, 0.6, 1.0)   // Z-axis (blue)
-// );
-// scene.add(axesHelper);
-
+// Bodies and system setup
+const bodies = setupBodiesAndSun(scene);
 const system = new System(bodies, scene);
 
+// Snow effect
+const snowEffect = new SnowEffect(scene);
+
+// Physics and animation loop
 let lastTime = performance.now();
 const targetFPS = 60;
 const timeStep = 1 / targetFPS;
 const physicsUpdatesPerFrame = 10; // Run physics updates 10 times per render frame
 const physicsMultiplier = 1;
-const physicsTimeStep = physicsMultiplier * timeStep / physicsUpdatesPerFrame;
+const physicsTimeStep = (physicsMultiplier * timeStep) / physicsUpdatesPerFrame;
 
 let controlsLastUsedTime = performance.now();
 const rotationSpeed = 0.005;
-// const rotationSpeed = 0;
-
 
 // Event listeners for controls
 controls.addEventListener('start', () => {
@@ -157,7 +62,7 @@ function animate() {
 
     snowEffect.update();
 
-    // Render the scene at 60 FPS
+    // Render the scene
     renderer.render(scene, camera);
 }
 

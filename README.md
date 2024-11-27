@@ -56,3 +56,8 @@ I tried increasing the line thickness but I couldn't get it to work faster so sk
 
 ![Just a line with snow](documentation/line_snow.gif)
 
+## 11/26
+
+I made the light follow the line.
+
+![Just a line with snow + light](documentation/line_snow_light.gif)
