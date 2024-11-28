@@ -2,8 +2,11 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { System } from './system.tsx';
 import SnowEffect from './snow.tsx';
-import { setupBodiesAndSun } from './bodies_setup.tsx'; // Import the setup function
-import { MicVolume } from './micVolume'; // Import the MicVolume class
+import { setupBodiesAndSun } from './bodies_setup.tsx';
+import animationContext from './context.tsx'; // Import the animation context
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
 
 // Set up the scene, camera, and renderer
 const scene = new THREE.Scene();
@@ -18,12 +21,21 @@ const controls = new OrbitControls(camera, renderer.domElement);
 
 // Bodies and system setup
 const bodies = setupBodiesAndSun(scene);
-const system = new System(bodies, scene);
+const system = new System(bodies, scene, animationContext); // Pass context to the system
 
 // Snow effect
 const snowEffect = new SnowEffect(scene);
 
-// Add an overlay textbox
+const composer = new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene, camera));
+
+const bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.5, 0.4, 0.85);
+bloomPass.threshold = 0.1; // Bloom threshold
+bloomPass.strength = 1.5; // Bloom strength
+bloomPass.radius = 0;     // Bloom radius
+composer.addPass(bloomPass);
+
+// Add an overlay textbox for physics timesteps
 const overlay = document.createElement('div');
 overlay.style.position = 'absolute';
 overlay.style.top = '10px';
@@ -34,6 +46,18 @@ overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
 overlay.style.borderRadius = '5px';
 overlay.innerText = 'Physics Timesteps: 0';
 document.body.appendChild(overlay);
+
+// Add an overlay for microphone volume level
+const volumeOverlay = document.createElement('div');
+volumeOverlay.style.position = 'absolute';
+volumeOverlay.style.top = '40px';
+volumeOverlay.style.left = '10px';
+volumeOverlay.style.color = 'white';
+volumeOverlay.style.padding = '10px';
+volumeOverlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+volumeOverlay.style.borderRadius = '5px';
+volumeOverlay.innerText = 'Mic Volume: 0';
+document.body.appendChild(volumeOverlay);
 
 // Physics and animation loop
 let lastTime = performance.now();
@@ -49,14 +73,6 @@ const rotationSpeed = 0.005;
 // Physics timestep counter
 let physicsTimestepCount = 0;
 
-// Event listeners for controls
-controls.addEventListener('start', () => {
-    controlsLastUsedTime = performance.now();
-});
-controls.addEventListener('change', () => {
-    controlsLastUsedTime = performance.now();
-});
-
 // Request access to the user's microphone
 navigator.mediaDevices.getUserMedia({ audio: true, video: false })
     .then((stream) => {
@@ -71,40 +87,27 @@ navigator.mediaDevices.getUserMedia({ audio: true, video: false })
         // Data array to store the frequency data
         const dataArray = new Uint8Array(analyser.frequencyBinCount);
 
-        // Add an overlay for microphone volume level
-        const volumeOverlay = document.createElement('div');
-        volumeOverlay.style.position = 'absolute';
-        volumeOverlay.style.top = '40px';
-        volumeOverlay.style.left = '10px';
-        volumeOverlay.style.color = 'white';
-        volumeOverlay.style.padding = '10px';
-        volumeOverlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
-        volumeOverlay.style.borderRadius = '5px';
-        volumeOverlay.innerText = 'Mic Volume: 0';
-        document.body.appendChild(volumeOverlay);
-
         // Function to calculate the average volume
-        function getAverageVolume(array) {
-            let sum = 0;
-            for (let i = 0; i < array.length; i++) {
-                sum += array[i];
-            }
+        function getAverageVolume(array: Uint8Array): number {
+            const sum = array.reduce((a, b) => a + b, 0);
             return sum / array.length;
         }
 
         // Animation loop to update mic volume level
         function updateVolume() {
+            composer.render();
+
             requestAnimationFrame(updateVolume);
 
             // Get frequency data from the analyser
             analyser.getByteFrequencyData(dataArray);
 
-            // Calculate the average volume
+            // Calculate and scale the average volume to 0-100
             const averageVolume = getAverageVolume(dataArray);
+            animationContext.micVolume = Math.round((averageVolume / 255) * 100);
 
-            // Scale volume to 0-100
-            const volumePercentage = Math.round((averageVolume / 255) * 100);
-            volumeOverlay.innerText = `Mic Volume: ${volumePercentage}`;
+            // Update the overlay
+            volumeOverlay.innerText = `Mic Volume: ${animationContext.micVolume}`;
         }
 
         updateVolume();
@@ -125,7 +128,6 @@ navigator.mediaDevices.getUserMedia({ audio: true, video: false })
         document.body.appendChild(errorOverlay);
     });
 
-
 function animate() {
     requestAnimationFrame(animate);
 
@@ -134,12 +136,15 @@ function animate() {
 
     // Run multiple physics updates within each animation frame
     for (let i = 0; i < physicsUpdatesPerFrame; i++) {
-        system.update(physicsTimeStep);
+        system.update(physicsTimeStep); // Use animationContext in system's update logic
         physicsTimestepCount++;
     }
 
     // Update the overlay text with the current physics timestep count
     overlay.innerText = `Physics Timesteps: ${physicsTimestepCount}`;
+
+    // Dynamically adjust brightness based on time
+    animationContext.brightness = Math.sin(performance.now() / 1000) * 0.5 + 1;
 
     lastTime = currentTime;
 

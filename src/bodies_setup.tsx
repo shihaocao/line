@@ -1,6 +1,8 @@
 import * as THREE from 'three';
 import Body from './body.tsx';
 import seedrandom from 'seedrandom';
+import animationContext from './context.tsx';
+
 
 // Seeded random generator
 const rng = seedrandom(3);
@@ -14,7 +16,7 @@ function getRandomPastelColor(): number {
     return color.getHex();
 }
 
-export function setupBodiesAndSun(scene: THREE.Scene): Body[] {
+export function setupBodiesAndSun(scene: THREE.Scene, context: typeof animationContext = animationContext): Body[] {
     const bodies: Body[] = [];
 
     function generateRandomBodiesWithAngularMomentum(
@@ -58,7 +60,7 @@ export function setupBodiesAndSun(scene: THREE.Scene): Body[] {
             }
             const color = debug ? getRandomPastelColor() : new THREE.Color(0xffffff);
 
-            bodies.push(new Body(position, velocity, color, mass, scene, vis_body, vis_trace, false, vis_light));
+            bodies.push(new Body(position, velocity, color, mass, scene, vis_body, vis_trace, false, vis_light, context));
         }
     }
 

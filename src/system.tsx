@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import Body from './body.tsx';
+import animationContext from './context.tsx';
 
 function sigmoid(x, shift) {
     return 1 / (1 + Math.exp(-(x-shift)));
@@ -13,8 +14,15 @@ export class System {
     softeningFactor: number;
     gravitationalEnergies: Map<number, Map<number, number>>; // Nested Map structure
     energyLimit: number;
+    context: typeof animationContext; // Reference to the animation context
 
-    constructor(bodies: Body[], scene: THREE.Scene, softeningFactor = 0.1, energyLimit = -5000) {
+    constructor(
+        bodies: Body[],
+        scene: THREE.Scene,
+        context: typeof animationContext = animationContext,
+        softeningFactor = 0.1,
+        energyLimit = -5000,
+    ) {
         this.bodies = bodies;
         this.G = 0.01;
         this.drag_coeff = 0.0001;
@@ -23,6 +31,9 @@ export class System {
 
         // Initialize gravitationalEnergies as an empty Map of Maps
         this.gravitationalEnergies = new Map();
+
+        // Store a reference to the animationContext
+        this.context = context;
     }
 
     bodies_update(bodies: Body[], dt: number) {

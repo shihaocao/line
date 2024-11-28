@@ -27,7 +27,7 @@ class SnowEffect {
             side: THREE.DoubleSide,
             transparent: true,
             opacity: 0.8,
-            roughness: 0.5, // Adjust for a matte look
+            roughness: 1.0, // Adjust for a matte look
             metalness: 0.0, // Set to 0 for a non-metallic look
         });
 

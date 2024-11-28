@@ -1,4 +1,6 @@
 import * as THREE from 'three';
+import animationContext from './context.tsx';
+
 
 export default class Body {
     enable_sphere: boolean;
@@ -22,6 +24,7 @@ export default class Body {
     trace1: THREE.Line;
     trace2: THREE.Line;
     light: THREE.PointLight | null;
+    context: typeof animationContext;
 
     constructor(
         position: THREE.Vector3,
@@ -32,7 +35,8 @@ export default class Body {
         enable_sphere: boolean,
         enable_trace: boolean,
         enable_anchor: boolean,
-        enable_light: boolean
+        enable_light: boolean,
+        context: typeof animationContext = animationContext
     ) {
         this.enable_sphere = enable_sphere;
         this.enable_trace = enable_trace;
@@ -47,6 +51,7 @@ export default class Body {
         this.currentPointIndex = 0;
         this.totalPoints = 0;
 
+        this.context = context;
         // Create a sphere to represent the body
         let size = 0.01;
         // size = 0.10;
@@ -152,6 +157,15 @@ export default class Body {
 
             const segment2Length = this.currentPointIndex;
             this.traceGeometry2.setDrawRange(0, segment2Length);
+        }
+
+        // make the size of the sphere depend on the mic volume
+        // this could be undefined though!
+        if (this.context) {
+            // this.mesh.scale.setScalar(this.context.micVolume / 10);
+            if(this.light) {
+                this.light.intensity = Math.max(this.context.micVolume, 5);
+            }
         }
 
         this.traceGeometry1.attributes.position.needsUpdate = true;
