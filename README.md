@@ -61,3 +61,13 @@ I tried increasing the line thickness but I couldn't get it to work faster so sk
 I made the light follow the line.
 
 ![Just a line with snow + light](documentation/line_snow_light.gif)
+
+## 11/28
+
+I am trying to work on bloom since I think that will help make the light itself more visceral
+
+https://discourse.threejs.org/t/how-to-get-selective-bloom-to-work-without-layers/57728
+https://discourse.threejs.org/t/selective-bloom-not-working-in-react-function-with-vanilla-js-wrapped-in-useeffect/42767/3
+https://discourse.threejs.org/t/effectcomposer-unrealbloompass-is-ruining-my-whole-render-thing/45253
+
+I ended up using an UnrealBloomPass.

@@ -31,7 +31,7 @@ composer.addPass(new RenderPass(scene, camera));
 
 const bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.5, 0.4, 0.85);
 bloomPass.threshold = 0.1; // Bloom threshold
-bloomPass.strength = 1.5; // Bloom strength
+bloomPass.strength = 1.0; // Bloom strength
 bloomPass.radius = 0;     // Bloom radius
 composer.addPass(bloomPass);
 
