@@ -3,7 +3,7 @@ import * as THREE from 'three';
 const range = 10;
 const y_range = 30;
 const fall_speed = 0.008;
-const floor_height = -2.2;
+const floor_height = -2.6;
 const particleCount = 3000;
 const particle_dim = 0.02;
 const rotation_multiplier = 0.1;

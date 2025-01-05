@@ -29,7 +29,7 @@ export function initializeAnimation(document: Document) {
         1.5, 0.4, 0.85
     );
     bloomPass.threshold = 0.1;
-    bloomPass.strength = 1.0;
+    bloomPass.strength = 0.7;
     bloomPass.radius = 0;
     composer.addPass(bloomPass);
 
@@ -68,7 +68,7 @@ export function initializeAnimation(document: Document) {
     const targetFPS = 60;
     const timeStep = 1 / targetFPS;
     const physicsUpdatesPerFrame = 10;
-    const physicsMultiplier = 1;
+    const physicsMultiplier = 1.2;
     const physicsTimeStep = (physicsMultiplier * timeStep) / physicsUpdatesPerFrame;
 
     let physicsTimestepCount = 0;
