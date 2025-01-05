@@ -71,3 +71,10 @@ https://discourse.threejs.org/t/selective-bloom-not-working-in-react-function-wi
 https://discourse.threejs.org/t/effectcomposer-unrealbloompass-is-ruining-my-whole-render-thing/45253
 
 I ended up using an UnrealBloomPass.
+
+## 12/XX
+
+I tried doing more work with pavucontrol and audio sinks and I have decided that the scope of this is too large.
+I will be happy playing a canned mp3 while the animation runs, so I shall do that.
+
+## 01/05
