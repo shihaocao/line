@@ -43,9 +43,6 @@ landingPage.appendChild(enterButton);
 const audioElement = new Audio('src/audio/as_the_world_falls_down_aaron_richards_cover.mp3');
 audioElement.loop = true;
 
-// Initialize MicVolume with the audio element
-const micVolume = new MicVolume(audioElement);
-
 // Handle "Enter" button click
 enterButton.addEventListener('click', () => {
     // Start playing audio
@@ -55,6 +52,9 @@ enterButton.addEventListener('click', () => {
 
     // Fade out the landing page
     landingPage.style.opacity = '0';
+
+    // Initialize MicVolume with the audio element
+    const micVolume = new MicVolume(audioElement);
 
     // After fade-out, remove the landing page and initialize animation
     setTimeout(() => {
@@ -66,6 +66,6 @@ enterButton.addEventListener('click', () => {
             const volume = micVolume.updateVolume();
             animationContext.micVolume = volume;
             console.log('Average Volume:', volume);
-        }, 100); // Update volume every 100ms
+        }, 20); // Update volume every 100ms
     }, 1000); // Match the fade-out duration (1s)
 });

@@ -44,6 +44,7 @@ export class MicVolume {
         this.averageVolume = sum / this.dataArray.length;
 
         // Scale to 0-100
-        return Math.round((this.averageVolume / 255) * 100);
+        var x = Math.round((this.averageVolume / 255) * 100);
+        return 2*Math.sqrt(x)
     }
 }

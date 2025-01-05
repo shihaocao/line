@@ -53,7 +53,7 @@ export default class Body {
 
         this.context = context;
         // Create a sphere to represent the body
-        let size = 0.01;
+        let size = 0.015;
         // size = 0.10;
         const geometry = new THREE.SphereGeometry(size, 32, 32);
         const material = new THREE.MeshBasicMaterial({ color: this.color });
