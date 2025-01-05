@@ -158,7 +158,7 @@ export class System {
         let system_energy = this.bodies.reduce((total, body) => total + body.calculateKineticEnergy(), 0);
         system_energy = system_energy;
         system_energy += this.calculateTotalGravitationalEnergy();
-        console.log("System energy:", system_energy);
+        // console.log("System energy:", system_energy);
     }
 
     calculateTotalGravitationalEnergy(): number {
