@@ -1,4 +1,6 @@
 import { initializeAnimation } from './animation_setup.tsx';
+import { MicVolume } from './mic_volume.tsx';
+import animationContext from './context.tsx';
 
 document.body.style.margin = '0';
 document.body.style.overflow = 'hidden';
@@ -18,7 +20,7 @@ document.body.appendChild(landingPage);
 
 // Create the "Enter" button
 const enterButton = document.createElement('button');
-enterButton.innerText = 'welcome :)';
+enterButton.innerText = 'hello, enjoy';
 enterButton.style.padding = '10px 20px';
 enterButton.style.fontSize = '20px';
 enterButton.style.border = 'none';
@@ -41,6 +43,9 @@ landingPage.appendChild(enterButton);
 const audioElement = new Audio('src/audio/as_the_world_falls_down_aaron_richards_cover.mp3');
 audioElement.loop = true;
 
+// Initialize MicVolume with the audio element
+const micVolume = new MicVolume(audioElement);
+
 // Handle "Enter" button click
 enterButton.addEventListener('click', () => {
     // Start playing audio
@@ -55,5 +60,12 @@ enterButton.addEventListener('click', () => {
     setTimeout(() => {
         landingPage.remove();
         initializeAnimation(document); // Initialize the animation
+
+        // Start monitoring volume
+        setInterval(() => {
+            const volume = micVolume.updateVolume();
+            animationContext.micVolume = volume;
+            console.log('Average Volume:', volume);
+        }, 100); // Update volume every 100ms
     }, 1000); // Match the fade-out duration (1s)
 });

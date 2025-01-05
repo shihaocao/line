@@ -120,6 +120,7 @@ export function initializeAnimation(document: Document) {
 
         // Update overlays
         overlay.innerText = `Physics Timesteps: ${physicsTimestepCount}`;
+        volumeOverlay.innerText = `Audio Volume: ${animationContext.micVolume}`;
         animationContext.brightness = calculateBrightness(elapsed);
         // console.log('Brightness:', animationContext.brightness);
 

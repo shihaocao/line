@@ -4,30 +4,30 @@ export class MicVolume {
     private dataArray: Uint8Array | null = null;
     private averageVolume: number = 0;
 
-    constructor() {
-        this.initMic();
+    constructor(audioElement: HTMLAudioElement) {
+        this.initAudio(audioElement);
     }
 
-    // Initialize the microphone
-    private async initMic(): Promise<void> {
+    // Initialize the audio element as the source
+    private initAudio(audioElement: HTMLAudioElement): void {
         try {
-            // Request microphone access
-            const stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
-
             // Initialize AudioContext and AnalyserNode
             this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
             this.analyser = this.audioContext.createAnalyser();
             this.analyser.fftSize = 256;
 
-            // Connect the microphone to the analyser
-            const microphone = this.audioContext.createMediaStreamSource(stream);
-            microphone.connect(this.analyser);
+            // Create a MediaElementSource from the audio element
+            const source = this.audioContext.createMediaElementSource(audioElement);
+            source.connect(this.analyser);
+
+            // Connect the analyser to the destination (to hear audio output)
+            this.analyser.connect(this.audioContext.destination);
 
             // Create a data array for frequency data
             this.dataArray = new Uint8Array(this.analyser.frequencyBinCount);
         } catch (error) {
-            console.error('Error accessing microphone:', error);
-            alert('Unable to access microphone. Please check your permissions.');
+            console.error('Error initializing audio:', error);
+            alert('Unable to initialize audio processing.');
         }
     }
 
