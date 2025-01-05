@@ -63,6 +63,18 @@ export function initializeAnimation(document: Document) {
     volumeOverlay.innerText = 'Mic Volume: 0';
     document.body.appendChild(volumeOverlay);
 
+    // Add fade mask
+    const fadeMask = document.createElement('div');
+    fadeMask.style.position = 'absolute';
+    fadeMask.style.top = '0';
+    fadeMask.style.left = '0';
+    fadeMask.style.width = '100%';
+    fadeMask.style.height = '100%';
+    fadeMask.style.backgroundColor = 'black';
+    fadeMask.style.pointerEvents = 'none'; // Allow interaction with underlying elements
+    fadeMask.style.transition = 'opacity 0.1s ease'; // Smooth transitions
+    document.body.appendChild(fadeMask);
+
     // Animation state
     let lastTime = performance.now();
     const targetFPS = 60;
@@ -75,11 +87,30 @@ export function initializeAnimation(document: Document) {
     let controlsLastUsedTime = performance.now();
     const rotationSpeed = 0.005;
 
+    // Brightness timing markers
+    const fadeInEndTime = 2.0; // seconds
+    const fadeOutStartTime = 160.0; // seconds
+    const fadeOutEndTime = 180.0; // seconds
+
+    // Calculate brightness based on time
+    function calculateBrightness(elapsed: number): number {
+        if (elapsed <= fadeInEndTime) {
+            return elapsed / fadeInEndTime; // Fade in: interpolate from 0 to 1
+        } else if (elapsed >= fadeOutStartTime && elapsed <= fadeOutEndTime) {
+            return 1 - (elapsed - fadeOutStartTime) / (fadeOutEndTime - fadeOutStartTime); // Fade out: 1 to 0
+        } else if (elapsed > fadeOutEndTime) {
+            return 0; // After fade out: brightness is 0
+        } else {
+            return 1; // Between fade in and fade out: brightness is 1
+        }
+    }
+    const start_time = performance.now();
+
     function animate() {
         requestAnimationFrame(animate);
 
         const currentTime = performance.now();
-        const elapsed = (currentTime - lastTime) / 1000;
+        const elapsed = (currentTime - start_time) / 1000; // Convert to seconds
 
         // Run multiple physics updates within each animation frame
         for (let i = 0; i < physicsUpdatesPerFrame; i++) {
@@ -87,10 +118,13 @@ export function initializeAnimation(document: Document) {
             physicsTimestepCount++;
         }
 
+        // Update overlays
         overlay.innerText = `Physics Timesteps: ${physicsTimestepCount}`;
-        animationContext.brightness = Math.sin(performance.now() / 1000) * 0.5 + 1;
+        animationContext.brightness = calculateBrightness(elapsed);
+        // console.log('Brightness:', animationContext.brightness);
 
-        lastTime = currentTime;
+        // Update fade mask opacity (inverted brightness)
+        fadeMask.style.opacity = `${1 - animationContext.brightness}`;
 
         const timeSinceLastUse = currentTime - controlsLastUsedTime;
         if (timeSinceLastUse > 2000) {
@@ -101,6 +135,8 @@ export function initializeAnimation(document: Document) {
         snowEffect.update();
 
         composer.render(scene, camera);
+
+        lastTime = currentTime;
     }
 
     // Start the animation
