@@ -33,18 +33,34 @@ export class MicVolume {
 
     // Method to update and calculate the average volume
     public updateVolume(): number {
-        if (!this.analyser || !this.dataArray) {
+        let lowerFreq = 1000
+        let upperFreq = 2000
+
+        lowerFreq = 0
+        upperFreq = 44000
+        if (!this.analyser || !this.dataArray || !this.audioContext) {
             return 0; // Return 0 if the analyser is not initialized
         }
 
         this.analyser.getByteFrequencyData(this.dataArray);
 
-        // Calculate the average volume
-        const sum = this.dataArray.reduce((a, b) => a + b, 0);
-        this.averageVolume = sum / this.dataArray.length;
+        // Map the frequency bins to actual frequencies
+        const sampleRate = this.audioContext.sampleRate;
+        const binCount = this.analyser.frequencyBinCount;
+        const binWidth = sampleRate / (2 * binCount); // Frequency range per bin
+
+        // Calculate the range of bins to analyze
+        const lowerBin = Math.floor(lowerFreq / binWidth);
+        const upperBin = Math.ceil(upperFreq / binWidth);
+
+        // Calculate the average volume within the specified frequency band
+        const sum = this.dataArray
+            .slice(lowerBin, upperBin)
+            .reduce((a, b) => a + b, 0);
+        const bandAverage = sum / (upperBin - lowerBin);
 
         // Scale to 0-100
-        var x = Math.round((this.averageVolume / 255) * 100);
-        return 2*Math.sqrt(x)
+        const scaledAverage = Math.round((bandAverage / 255) * 100);
+        return 2 * Math.sqrt(scaledAverage);
     }
 }
