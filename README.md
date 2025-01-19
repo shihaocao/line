@@ -101,3 +101,13 @@ Note: A lot of things were broken because I didn't have `package.json` which see
 npm start
 npm install
 ```
+
+```
+npm install depcheck
+depcheck
+npm install eslint --save-dev
+npx eslint --init
+npx eslint "src/**/*.{js,ts,tsx}"
+```
+
+Depcheck was simpler lol.
