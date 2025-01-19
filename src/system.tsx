@@ -174,5 +174,19 @@ export class System {
         }
         return totalEnergy;
     }
+
+    mute() {
+        for (let i = 0; i < this.bodies.length; i++) {
+            const bodyA = this.bodies[i];
+            bodyA.mute();
+        }
+    }
+    unmute() {
+        for (let i = 0; i < this.bodies.length; i++) {
+            const bodyA = this.bodies[i];
+            bodyA.unmute();
+        }
+
+    }
     
 }

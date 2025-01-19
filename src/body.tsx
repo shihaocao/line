@@ -1,6 +1,8 @@
 import * as THREE from 'three';
 import {animationContext, BodyContext} from './context.tsx';
 
+const budgetBloomFactor = 0.07;
+const budgetBloomSizeFactor = 2;
 
 export default class Body {
     enable_sphere: boolean;
@@ -15,7 +17,9 @@ export default class Body {
     maxPoints: number;
     currentPointIndex: number;
     totalPoints: number;
+    geometry: THREE.SphereGeometry;
     mesh: THREE.Mesh;
+    mesh2: THREE.Mesh;
     positionsArray: Float32Array;
     opacityArray: Float32Array;
     traceGeometry1: THREE.BufferGeometry;
@@ -27,6 +31,7 @@ export default class Body {
     context: typeof animationContext;
     bodyContext: BodyContext;
     material: THREE.MeshBasicMaterial;
+    material2: THREE.MeshBasicMaterial;
     constructor(
         position: THREE.Vector3,
         velocity: THREE.Vector3,
@@ -59,15 +64,30 @@ export default class Body {
         // Create a sphere to represent the body
         let size = 0.015;
         // size = 0.10;
-        const geometry = new THREE.SphereGeometry(size, 32, 32);
+        this.geometry = new THREE.SphereGeometry(size, 32, 32);
         this.material = new THREE.MeshBasicMaterial({ color: this.color, transparent: true, opacity: 1 });
-        this.mesh = new THREE.Mesh(geometry, this.material);
+        this.mesh = new THREE.Mesh(this.geometry, this.material);
         this.mesh.position.copy(this.position);
 
         if (this.enable_sphere) {
             scene.add(this.mesh);
         }
 
+        // outer sphere
+        const geometry2 = new THREE.SphereGeometry(size * budgetBloomSizeFactor, 32, 32);
+        // const material2 = new THREE.MeshBasicMaterial({ color: this.color, transparent: true, opacity: 0.1 });
+        this.material2 = new THREE.MeshBasicMaterial({
+                    color: this.color, // Dark gray base color
+                    roughness: 0.01,  // Matte surface
+                    metalness: 0,    // Non-metallic
+                    opacity: budgetBloomFactor,
+                    transparent: true,
+                    side: THREE.DoubleSide,
+                });
+        this.mesh2 = new THREE.Mesh(geometry2, this.material2);
+        this.mesh2.position.copy(this.position)
+        scene.add(this.mesh2)
+    
         // Create a shared array for positions
         this.positionsArray = new Float32Array(this.maxPoints * 3);
         this.opacityArray = new Float32Array(this.maxPoints);
@@ -131,6 +151,7 @@ export default class Body {
         this.position.add(this.velocity.clone().multiplyScalar(dt));
 
         this.mesh.position.copy(this.position);
+        this.mesh2.position.copy(this.position);
 
         // Update light position if enabled
         if (this.light) {
@@ -174,6 +195,9 @@ export default class Body {
             }
         }
         this.material.opacity = this.bodyContext.bodyOpacity;
+        this.material2.opacity = this.bodyContext.bodyOpacity * budgetBloomFactor;
+        this.mesh.opacicty = this.bodyContext.bodyOpacity;
+        this.mesh2.opacicty = this.bodyContext.bodyOpacity * budgetBloomFactor;
 
         this.traceGeometry1.attributes.position.needsUpdate = true;
         this.traceGeometry1.attributes.opacity.needsUpdate = true;
@@ -185,5 +209,15 @@ export default class Body {
     calculateKineticEnergy(): number {
         const speed = this.velocity.length();
         return 0.5 * this.mass * speed * speed;
+    }
+
+    mute() {
+        this.traceGeometry1.color = new THREE.Color(0x000000);
+        this.traceGeometry2.color = new THREE.Color(0x000000);
+    }
+
+    unmute() {
+        this.traceGeometry1.color = this.color;
+        this.traceGeometry2.color = this.color;
     }
 }

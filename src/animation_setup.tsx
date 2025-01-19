@@ -28,9 +28,9 @@ export function initializeAnimation(document: Document) {
         new THREE.Vector2(window.innerWidth, window.innerHeight),
         1.5, 0.4, 0.85
     );
-    bloomPass.threshold = 0.1;
-    bloomPass.strength = 0.7;
-    bloomPass.radius = 0;
+    bloomPass.threshold = 0;
+    bloomPass.strength = 1;
+    bloomPass.radius = 0.2;
     composer.addPass(bloomPass);
 
     // Setup bodies and system

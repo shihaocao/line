@@ -17,3 +17,4 @@ export class AnimationContext {
 export const animationContext = new AnimationContext();
 animationContext.debugBodyContext.bodyOpacity = 0;
 animationContext.debugBodyContext.lineOpacity = 0;
+animationContext.mainBodyContext.lineOpacity = 0.5;
