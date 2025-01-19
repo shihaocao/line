@@ -140,3 +140,13 @@ Bonus:
 
 EOD update:
 - I have almost updated all the bodies to support the plumbing of a body context, but now I need to update the animation funtion to change the opacity over time.
+
+# 01/19
+
+I've got the slider plumbed through to control the visibility of the debug items. I really like this a lot, and I want to hide the slider until the later half of the song and autonomously control the slider vlaue. This might fight with the user.
+
+I might make something where if the user interacts, it overrides...? Or I may just create a toggle on the mux that disables autonomous control... state seems hard.
+
+Here's a screenshot with the slider.
+
+![Just a line with snow + light](documentation/debug-slider.jpg)

@@ -8,10 +8,12 @@ export class AnimationContext {
     public micVolume: number = 0.5; // Default mic volume
     public debugOpacity: number = 0;
 
-    public mainBodyContext: BodyContext
-    public debugBodyContext: BodyContext
+    public mainBodyContext: BodyContext = new BodyContext();
+    public debugBodyContext: BodyContext = new BodyContext();
 
     // No constructor logic needed unless defaults are complex
 }
 
 export const animationContext = new AnimationContext();
+animationContext.debugBodyContext.bodyOpacity = 0;
+animationContext.debugBodyContext.lineOpacity = 0;

@@ -25,7 +25,7 @@ export default class Body {
     trace2: THREE.Line;
     light: THREE.PointLight | null;
     context: typeof animationContext;
-    bodyContext: typeof BodyContext;
+    bodyContext: BodyContext;
     material: THREE.MeshBasicMaterial;
     constructor(
         position: THREE.Vector3,
@@ -38,7 +38,7 @@ export default class Body {
         enable_anchor: boolean,
         enable_light: boolean,
         context: typeof animationContext = animationContext,
-        bodyContext: typeof BodyContext,
+        bodyContext: BodyContext,
     ) {
         this.enable_sphere = enable_sphere;
         this.enable_trace = enable_trace;
@@ -144,8 +144,10 @@ export default class Body {
         // Update opacity values based on age of the point
         for (let i = 0; i < this.maxPoints; i++) {
             const age = (this.maxPoints + this.currentPointIndex - i) % this.maxPoints;
-            this.opacityArray[i] = 1 - age / this.maxPoints;
+            this.opacityArray[i] = (1 - age / this.maxPoints) * this.bodyContext.lineOpacity;
         }
+
+        console.log(`line opacicty in body: ${this.bodyContext.lineOpacity}`);
 
         // Increment the index and wrap around if necessary (circular buffer)
         this.currentPointIndex = (this.currentPointIndex + 1) % this.maxPoints;
@@ -168,9 +170,10 @@ export default class Body {
         if (this.context) {
             // this.mesh.scale.setScalar(this.context.micVolume / 10);
             if(this.light) {
-                this.light.intensity = Math.max(this.context.micVolume, 5);
+                this.light.intensity = Math.max(this.context.micVolume, 5) * this.bodyContext.bodyOpacity;
             }
         }
+        this.material.opacity = this.bodyContext.bodyOpacity;
 
         this.traceGeometry1.attributes.position.needsUpdate = true;
         this.traceGeometry1.attributes.opacity.needsUpdate = true;

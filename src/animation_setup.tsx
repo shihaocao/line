@@ -63,6 +63,37 @@ export function initializeAnimation(document: Document) {
     volumeOverlay.innerText = 'Mic Volume: 0';
     document.body.appendChild(volumeOverlay);
 
+    // Add slider
+    const sliderContainer = document.createElement('div');
+    sliderContainer.style.position = 'absolute';
+    sliderContainer.style.top = '90px';
+    sliderContainer.style.left = '10px';
+    sliderContainer.style.color = 'white';
+    sliderContainer.style.padding = '10px';
+    sliderContainer.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+    sliderContainer.style.borderRadius = '5px';
+
+    const sliderLabel = document.createElement('label');
+    sliderLabel.innerText = 'Debug Opacity ';
+    sliderLabel.style.marginRight = '10px';
+
+    const slider = document.createElement('input');
+    slider.type = 'range';
+    slider.min = '0';
+    slider.max = '1';
+    slider.step = '0.01';
+    slider.value = `${animationContext.debugBodyContext.lineOpacity}`;
+    slider.addEventListener('input', () => {
+        const value = parseFloat(slider.value);
+        animationContext.debugBodyContext.lineOpacity = value;
+        animationContext.debugBodyContext.bodyOpacity = value;
+        // console.log(`Brightness Slider Value: ${value}`);
+    });
+
+    sliderContainer.appendChild(sliderLabel);
+    sliderContainer.appendChild(slider);
+    document.body.appendChild(sliderContainer);
+
     // Add fade mask
     const fadeMask = document.createElement('div');
     fadeMask.style.position = 'absolute';

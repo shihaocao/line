@@ -8,13 +8,25 @@ import {animationContext} from './context.tsx';
 const rng = seedrandom(3);
 let debug = false; // Toggle for debugging pastel colors
 // debug = true;
-function getRandomPastelColor(): number {
-    const hue = rng();
-    const saturation = 0.5 + rng() * 0.3;
-    const lightness = 0.8 + rng() * 0.2;
+function getPastelColor(hue: number): number {
+    const saturation = 0.7; // Fixed pastel-like saturation
+    const lightness = 0.7; // Fixed pastel-like lightness
     const color = new THREE.Color().setHSL(hue, saturation, lightness);
-    return color.getHex();
+    return color;
 }
+
+// Fixed hues for pastel red, orange, yellow, green, blue, and purple
+const pastelHues = [
+    0,             // Red
+    120 / 360,     // Green
+    240 / 360,     // Blue
+    30 / 360,      // Orange
+    60 / 360,      // Yellow
+    270 / 360,     // Purple
+];
+
+// Generate the pastel color array
+const pastelColors = pastelHues.map(getPastelColor);
 
 export function setupBodiesAndSun(scene: THREE.Scene, context: typeof animationContext = animationContext): Body[] {
     const bodies: Body[] = [];
@@ -45,25 +57,32 @@ export function setupBodiesAndSun(scene: THREE.Scene, context: typeof animationC
                 .normalize()
                 .multiplyScalar(speed);
 
-            let vis_body = false;
-            let vis_trace = false;
-            let vis_light = false;
-            if(i == 0 ) {
-                vis_trace = true;
-                vis_body = true;
-                vis_light = true;
-            }
-            if (debug) {
-                vis_body = true;
-                vis_trace = true;
-                vis_light = true;
-            }
-            const color = debug ? getRandomPastelColor() : new THREE.Color(0xffffff);
+            // Previously: Binary enable disable
+            // let vis_body = false;
+            // let vis_trace = false;
+            // let vis_light = false;
+            // if(i == 0 ) {
+            //     vis_trace = true;
+            //     vis_body = true;
+            //     vis_light = true;
+            // }
+            // if (debug) {
+            //     vis_body = true;
+            //     vis_trace = true;
+            //     vis_light = true;
+            // }
+            // Now we just let them all be visible and let opacity controls control visibility.
+            let vis_body = true;
+            let vis_trace = true;
+            let vis_light = true;
 
             let body_context;
+            let color = new THREE.Color(0xffffff);
             if (i == 0) {
-                body_context = context.soloBodyContext;
+                body_context = context.mainBodyContext;
+                color = new THREE.Color(0xffffff);
             } else {
+                color = pastelColors[i];
                 body_context = context.debugBodyContext;
             }
             bodies.push(new Body(position, velocity, color, mass, scene, vis_body, vis_trace, false, vis_light, context, body_context));
