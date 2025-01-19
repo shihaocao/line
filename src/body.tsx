@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import animationContext from './context.tsx';
+import {animationContext, BodyContext} from './context.tsx';
 
 
 export default class Body {
@@ -25,7 +25,8 @@ export default class Body {
     trace2: THREE.Line;
     light: THREE.PointLight | null;
     context: typeof animationContext;
-
+    bodyContext: typeof BodyContext;
+    material: THREE.MeshBasicMaterial;
     constructor(
         position: THREE.Vector3,
         velocity: THREE.Vector3,
@@ -36,7 +37,8 @@ export default class Body {
         enable_trace: boolean,
         enable_anchor: boolean,
         enable_light: boolean,
-        context: typeof animationContext = animationContext
+        context: typeof animationContext = animationContext,
+        bodyContext: typeof BodyContext,
     ) {
         this.enable_sphere = enable_sphere;
         this.enable_trace = enable_trace;
@@ -52,12 +54,14 @@ export default class Body {
         this.totalPoints = 0;
 
         this.context = context;
+        this.bodyContext = bodyContext;
+
         // Create a sphere to represent the body
         let size = 0.015;
         // size = 0.10;
         const geometry = new THREE.SphereGeometry(size, 32, 32);
-        const material = new THREE.MeshBasicMaterial({ color: this.color });
-        this.mesh = new THREE.Mesh(geometry, material);
+        this.material = new THREE.MeshBasicMaterial({ color: this.color, transparent: true, opacity: 1 });
+        this.mesh = new THREE.Mesh(geometry, this.material);
         this.mesh.position.copy(this.position);
 
         if (this.enable_sphere) {

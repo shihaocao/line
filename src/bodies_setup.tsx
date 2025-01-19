@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import Body from './body.tsx';
 import seedrandom from 'seedrandom';
-import animationContext from './context.tsx';
+import {animationContext} from './context.tsx';
 
 
 // Seeded random generator
@@ -60,7 +60,13 @@ export function setupBodiesAndSun(scene: THREE.Scene, context: typeof animationC
             }
             const color = debug ? getRandomPastelColor() : new THREE.Color(0xffffff);
 
-            bodies.push(new Body(position, velocity, color, mass, scene, vis_body, vis_trace, false, vis_light, context));
+            let body_context;
+            if (i == 0) {
+                body_context = context.soloBodyContext;
+            } else {
+                body_context = context.debugBodyContext;
+            }
+            bodies.push(new Body(position, velocity, color, mass, scene, vis_body, vis_trace, false, vis_light, context, body_context));
         }
     }
 
@@ -75,7 +81,9 @@ export function setupBodiesAndSun(scene: THREE.Scene, context: typeof animationC
         debug,
         false,
         true,
-        false
+        false,
+        context,
+        context.debugBodyContext,
     );
     bodies.push(sun);
 

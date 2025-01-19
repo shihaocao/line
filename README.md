@@ -77,6 +77,11 @@ I ended up using an UnrealBloomPass.
 I tried doing more work with pavucontrol and audio sinks and I have decided that the scope of this is too large.
 I will be happy playing a canned mp3 while the animation runs, so I shall do that.
 
+I added audio using just a stored mp3. I used this site and it worked pretty well.
+```
+https://cnvmp3.com/v3
+```
+
 ## 01/17
 
 Today I want to link the project to Vercel and a real domain.
@@ -111,3 +116,27 @@ npx eslint "src/**/*.{js,ts,tsx}"
 ```
 
 Depcheck was simpler lol.
+
+## 01/18
+
+It is now deployed to cloud flare! I had to fix the redirect loop by changing the SSL/TLS to full. A google search fixed this.
+
+`https://vercel.com/guides/resolve-err-too-many-redirects-when-using-cloudflare-proxy-with-vercel`
+
+---
+
+Now I want to write out a list of things I want to do as I finalize this project.
+
+- I want slider systems, something where you can realtime adjust the values of brightnesses and opacities.
+  - I then also want to have the automatically orchestrated components to also change the slider positions.
+- I want a sequence at the end where when the music gets more intense, it reveals the debug opacity slider and makes it more bright.
+- I want some sort of sliding text (kinda like movie credits), that explains my rationale and why I wanted to make this project.
+- About me, and contact me section
+
+Bonus:
+- Mobile experience
+- Google Analytics
+- The line is kinda like... too much like bresenham line lmfao. I should fix that.
+
+EOD update:
+- I have almost updated all the bodies to support the plumbing of a body context, but now I need to update the animation funtion to change the opacity over time.

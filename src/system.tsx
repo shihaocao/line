@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import Body from './body.tsx';
-import animationContext from './context.tsx';
+import { animationContext } from './context.tsx';
 
 function sigmoid(x, shift) {
     return 1 / (1 + Math.exp(-(x-shift)));

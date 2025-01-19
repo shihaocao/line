@@ -1,6 +1,6 @@
 import { initializeAnimation } from './animation_setup.tsx';
 import { MicVolume } from './mic_volume.tsx';
-import animationContext from './context.tsx';
+import {animationContext} from './context.tsx';
 
 document.body.style.margin = '0';
 document.body.style.overflow = 'hidden';
