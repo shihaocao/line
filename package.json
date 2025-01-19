@@ -14,5 +14,8 @@
   "devDependencies": {
     "vite": "^4.0.0",
     "vite-plugin-vercel": "^9.0.4"
+  },
+  "dependencies": {
+    "three": "^0.172.0"
   }
 }
