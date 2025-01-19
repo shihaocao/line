@@ -77,4 +77,27 @@ I ended up using an UnrealBloomPass.
 I tried doing more work with pavucontrol and audio sinks and I have decided that the scope of this is too large.
 I will be happy playing a canned mp3 while the animation runs, so I shall do that.
 
-## 01/05
+## 01/17
+
+Today I want to link the project to Vercel and a real domain.
+
+I registered listentotheline.com on cloud flare because that was the cheapest.
+
+I also considered names like: wherewillwegonow.com or fallingintoorbit.com, or astheworldfallsdown.com,
+but I think listentotheline flows nicely and is self-descriptive of the project.
+
+Vercel told me to use this?
+https://github.com/magne4000/vite-plugin-vercel#readme
+
+```
+npm install -g vercel
+npm i -D vite-plugin-vercel
+npm install vite-plugin-vercel --save-dev
+```
+
+Note: A lot of things were broken because I didn't have `package.json` which seems to prevent me from having local node_modules so I kept running into a bunch of dependency issues because I was using a global node modules. I'm surprised I made it this far.
+
+```
+npm start
+npm install
+```
