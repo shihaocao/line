@@ -40,7 +40,7 @@ enterButton.addEventListener('mouseleave', () => {
 landingPage.appendChild(enterButton);
 
 // Audio setup
-const audioElement = new Audio('src/audio/as_the_world_falls_down_aaron_richards_cover.mp3');
+const audioElement = new Audio('/audio/as_the_world_falls_down_aaron_richards_cover.mp3');
 audioElement.loop = true;
 
 // Handle "Enter" button click
