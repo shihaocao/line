@@ -72,7 +72,9 @@ export function initializeAnimation(document: Document) {
     sliderContainer.style.padding = '10px';
     sliderContainer.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
     sliderContainer.style.borderRadius = '5px';
-
+    sliderContainer.style.display = animationContext.sliderIsVis ? 'block' : 'none';
+    sliderContainer.style.pointerEvents = animationContext.sliderIsVis ? 'auto' : 'none';
+    
     const sliderLabel = document.createElement('label');
     sliderLabel.innerText = 'Debug Opacity ';
     sliderLabel.style.marginRight = '10px';
@@ -123,6 +125,9 @@ export function initializeAnimation(document: Document) {
     const fadeOutStartTime = 160.0; // seconds
     const fadeOutEndTime = 180.0; // seconds
 
+    const sliderFadeInTime = 10;
+    const sliderFadeInEndTime = 20;
+
     // Calculate brightness based on time
     function calculateBrightness(elapsed: number): number {
         if (elapsed <= fadeInEndTime) {
@@ -137,11 +142,33 @@ export function initializeAnimation(document: Document) {
     }
     const start_time = performance.now();
 
+    function updateSliderVisibility(elapsed: number) {
+        if(elapsed > sliderFadeInTime) {
+            animationContext.sliderIsVis = true;
+        }
+
+        if(elapsed > sliderFadeInTime && elapsed < sliderFadeInEndTime) {
+            const val = (elapsed - sliderFadeInTime) / (sliderFadeInEndTime - sliderFadeInTime);
+            animationContext.debugBodyContext.bodyOpacity = val;
+            animationContext.debugBodyContext.lineOpacity = val;
+        }
+
+        if (animationContext.sliderIsVis) {
+            sliderContainer.style.display = 'block';          // Show slider
+            sliderContainer.style.pointerEvents = 'auto';     // Enable interaction
+        } else {
+            sliderContainer.style.display = 'none';           // Hide slider
+            sliderContainer.style.pointerEvents = 'none';     // Disable interaction
+        }
+    }    
+
     function animate() {
         requestAnimationFrame(animate);
 
         const currentTime = performance.now();
         const elapsed = (currentTime - start_time) / 1000; // Convert to seconds
+
+        updateSliderVisibility(elapsed);
 
         // Run multiple physics updates within each animation frame
         for (let i = 0; i < physicsUpdatesPerFrame; i++) {

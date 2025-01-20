@@ -11,6 +11,7 @@ export class AnimationContext {
     public mainBodyContext: BodyContext = new BodyContext();
     public debugBodyContext: BodyContext = new BodyContext();
 
+    public sliderIsVis: boolean = false;
     // No constructor logic needed unless defaults are complex
 }
 
