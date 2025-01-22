@@ -98,12 +98,11 @@ class SnowEffect {
 
     update() {
         const dummy = new THREE.Object3D();
-
-        // Update each snowflake's position, rotation, and fading
+    
         for (let i = 0; i < particleCount; i++) {
             this.snowflakes.getMatrixAt(i, dummy.matrix);
             dummy.matrix.decompose(dummy.position, dummy.quaternion, dummy.scale);
-
+    
             if (dummy.position.y <= floor_height) {
                 if (this.stationaryTimers[i] === 0) {
                     this.velocities[i] = 0;
@@ -112,7 +111,7 @@ class SnowEffect {
                 } else if (this.stationaryTimers[i] > 0) {
                     this.stationaryTimers[i]--;
                     this.opacities[i] = Math.max(0, this.opacities[i] - 0.8 / stationary_duration);
-
+    
                     if (this.stationaryTimers[i] === 0) {
                         dummy.position.set(
                             Math.random() * range - range / 2,
@@ -121,29 +120,32 @@ class SnowEffect {
                         );
                         this.velocities[i] = Math.random() * fall_speed + fall_speed / 5;
                         this.opacities[i] = 0.8;
-                        this.rotationQuaternions[i].identity();
+                        this.rotationQuaternions[i].identity(); // Reset rotation
                     }
                 }
             } else {
                 dummy.position.y -= this.velocities[i];
-
-                const axis = this.rotationRates[i];
-                const deltaQuat = new THREE.Quaternion().setFromAxisAngle(axis.normalize(), axis.length() * rotation_multiplier);
-                this.rotationQuaternions[i].multiply(deltaQuat);
-
+    
+                if (this.stationaryTimers[i] === 0) { // Only update rotation if not stationary
+                    const axis = this.rotationRates[i];
+                    const deltaQuat = new THREE.Quaternion().setFromAxisAngle(axis.normalize(), axis.length() * rotation_multiplier);
+                    this.rotationQuaternions[i].multiply(deltaQuat);
+                }
+    
                 dummy.quaternion.copy(this.rotationQuaternions[i]);
             }
-
+    
             dummy.updateMatrix();
             this.snowflakes.setMatrixAt(i, dummy.matrix);
-
+    
             const instanceColor = new THREE.Color(1, 1, 1).multiplyScalar(this.opacities[i]);
             this.snowflakes.setColorAt(i, instanceColor);
         }
-
+    
         this.snowflakes.instanceMatrix.needsUpdate = true;
         this.snowflakes.instanceColor.needsUpdate = true;
     }
+    
 }
 
 export default SnowEffect;

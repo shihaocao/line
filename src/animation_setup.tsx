@@ -29,7 +29,7 @@ export function initializeAnimation(document: Document) {
         1.5, 0.4, 0.85
     );
     bloomPass.threshold = 0;
-    bloomPass.strength = 1;
+    bloomPass.strength = 2;
     bloomPass.radius = 0.2;
     composer.addPass(bloomPass);
 

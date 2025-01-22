@@ -3,6 +3,8 @@ import {animationContext, BodyContext} from './context.tsx';
 
 const budgetBloomFactor = 0.07;
 const budgetBloomSizeFactor = 2;
+const maxLineOpacity = 0.8;
+const maxLinePoints = 6000;
 
 export default class Body {
     enable_sphere: boolean;
@@ -54,7 +56,7 @@ export default class Body {
         this.acceleration = new THREE.Vector3();
         this.mass = mass;
         this.color = color;
-        this.maxPoints = 10000;
+        this.maxPoints = maxLinePoints;
         this.currentPointIndex = 0;
         this.totalPoints = 0;
 
@@ -191,7 +193,7 @@ export default class Body {
         if (this.context) {
             // this.mesh.scale.setScalar(this.context.micVolume / 10);
             if(this.light) {
-                this.light.intensity = Math.max(this.context.micVolume, 5) * this.bodyContext.bodyOpacity;
+                this.light.intensity = Math.max(this.context.micVolume, 5) * this.bodyContext.bodyOpacity * maxLineOpacity;
             }
         }
         this.material.opacity = this.bodyContext.bodyOpacity;
