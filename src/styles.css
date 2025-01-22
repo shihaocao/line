@@ -1,0 +1,109 @@
+/* styles.css */
+
+/* Hide the scrollbar by default */
+.scrolling-overlay::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
+
+.scrolling-overlay {
+    scrollbar-width: none; /* For Firefox */
+    -ms-overflow-style: none; /* For Internet Explorer and Edge */
+}
+
+/* Show the scrollbar when hovering over the overlay */
+.scrolling-overlay:hover::-webkit-scrollbar {
+    width: 8px; /* Set the scrollbar width */
+    height: 8px;
+}
+
+/* Customize the scrollbar appearance */
+.scrolling-overlay::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.5); /* Scrollbar color */
+    border-radius: 4px; /* Rounded edges */
+}
+
+.scrolling-overlay::-webkit-scrollbar-track {
+    background-color: transparent; /* Scrollbar track color */
+}
+
+/* Base styles for body and text */
+body {
+    font-family: Arial, Helvetica, sans-serif; /* Set a default font */
+    line-height: 1.6; /* Increase line spacing for better readability */
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4; /* Optional background color */
+    color: #333; /* Default text color */
+}
+
+/* Paragraphs */
+p {
+    font-size: 16px; /* Default font size for body text */
+    margin: 10px 0; /* Spacing between paragraphs */
+}
+
+/* Headings */
+h1 {
+    font-size: 32px; /* Large size for main headings */
+    font-weight: bold;
+    margin: 20px 0; /* Spacing above and below */
+    /* color: #222; Slightly darker color for emphasis */
+}
+
+h2 {
+    font-size: 24px; /* Slightly smaller than h1 */
+    font-weight: bold;
+    margin: 18px 0; /* Spacing above and below */
+    /* color: #333; */
+}
+
+h3 {
+    font-size: 20px; /* Smaller heading */
+    font-weight: bold;
+    margin: 16px 0;
+    color: #444;
+}
+
+h4 {
+    font-size: 18px; /* Smaller still */
+    font-weight: bold;
+    margin: 14px 0;
+    color: #555;
+}
+
+h5 {
+    font-size: 16px; /* Similar size to paragraph, but styled differently */
+    font-weight: bold;
+    margin: 12px 0;
+    color: #666;
+}
+
+h6 {
+    font-size: 14px; /* Smallest heading */
+    font-weight: bold;
+    margin: 10px 0;
+    color: #777;
+}
+
+/* Lists */
+ul {
+    margin: 10px 0 10px 20px; /* Indent lists for better alignment */
+    padding: 0;
+    list-style: disc; /* Default bullet style */
+}
+
+li {
+    margin: 5px 0; /* Spacing between list items */
+    font-size: 16px; /* Match paragraph size */
+}
+
+/* Links */
+a {
+    color: #0066cc; /* Default link color */
+    text-decoration: none; /* Remove underline */
+}
+
+a:hover {
+    text-decoration: underline; /* Underline on hover */
+}

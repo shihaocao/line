@@ -7,6 +7,9 @@ import { System } from './system.tsx';
 import SnowEffect from './snow.tsx';
 import { setupBodiesAndSun } from './bodies_setup.tsx';
 import {animationContext} from './context.tsx';
+import './styles.css';
+import { getReadmeContent } from './blurb.tsx';
+
 
 export function initializeAnimation(document: Document) {
     // Create scene, camera, and renderer
@@ -95,6 +98,51 @@ export function initializeAnimation(document: Document) {
     sliderContainer.appendChild(sliderLabel);
     sliderContainer.appendChild(slider);
     document.body.appendChild(sliderContainer);
+
+    // Create scrolling overlay
+    const scrollingOverlay = document.createElement('div');
+    scrollingOverlay.style.position = 'absolute';
+    scrollingOverlay.style.bottom = '20px';
+    scrollingOverlay.style.left = '10%'; // Set left and right padding instead of centering
+    scrollingOverlay.style.right = '10%'; // This ensures 80% width dynamically
+    scrollingOverlay.style.height = '100px';
+    scrollingOverlay.style.overflowY = 'auto';
+    scrollingOverlay.style.padding = '10px';
+    scrollingOverlay.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
+    scrollingOverlay.style.color = 'white';
+    scrollingOverlay.style.borderRadius = '10px';
+    scrollingOverlay.style.fontSize = '14px';
+    scrollingOverlay.style.lineHeight = '1.5';
+    scrollingOverlay.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.3)';
+    scrollingOverlay.className = 'scrolling-overlay'; // Add a class for custom styles
+    document.body.appendChild(scrollingOverlay);
+
+
+    scrollingOverlay.innerHTML = getReadmeContent();
+
+
+    let isUserScrolling = false; // Track manual scrolling
+
+    // Detect manual scrolling
+    scrollingOverlay.addEventListener('wheel', () => {
+        isUserScrolling = true; // Set flag when user scrolls manually
+        clearTimeout(resetScrollTimeout); // Clear any pending resets
+        resetScrollTimeout = setTimeout(() => {
+            isUserScrolling = false; // Reset flag after inactivity
+        }, 2000); // Wait for 2 seconds of inactivity
+    });
+    
+    let resetScrollTimeout;
+    
+    // // Smooth automatic scrolling
+    // function autoScrollOverlay() {
+    //     if (!isUserScrolling) { // Only auto-scroll if the user isn't interacting
+    //         scrollingOverlay.scrollBy({ top: 1, behavior: 'smooth' }); // Scroll by 1px smoothly
+    //     }
+    // }
+    
+    // // Call autoScrollOverlay periodically
+    // setInterval(autoScrollOverlay, 1000); // Approximately 60 FPS
 
     // Add fade mask
     const fadeMask = document.createElement('div');

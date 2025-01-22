@@ -150,3 +150,9 @@ I might make something where if the user interacts, it overrides...? Or I may ju
 Here's a screenshot with the slider.
 
 ![Just a line with snow + light](documentation/debug-slider.jpg)
+
+# 01/22
+
+Holy cow I have words at the bottom! I was struggling to get the format right, everything was showing up as if it was just <p>, but it turns out the reason it wasn't working was that I didn't define all the tags and classes and such in my styles file. Wow. That's wild. But glad I know now!
+
+![Textbox works!](documentation/textbox.jpg)
