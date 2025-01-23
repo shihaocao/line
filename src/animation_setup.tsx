@@ -105,7 +105,7 @@ export function initializeAnimation(document: Document) {
     scrollingOverlay.style.bottom = '20px';
     scrollingOverlay.style.left = '10%'; // Set left and right padding instead of centering
     scrollingOverlay.style.right = '10%'; // This ensures 80% width dynamically
-    scrollingOverlay.style.height = '100px';
+    scrollingOverlay.style.height = '15%';
     scrollingOverlay.style.overflowY = 'auto';
     scrollingOverlay.style.padding = '10px';
     scrollingOverlay.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
@@ -173,8 +173,9 @@ export function initializeAnimation(document: Document) {
     const fadeOutStartTime = 160.0; // seconds
     const fadeOutEndTime = 180.0; // seconds
 
-    const sliderFadeInTime = 10;
-    const sliderFadeInEndTime = 20;
+    const sliderFadeInTime = 15;
+    const sliderFadeInEndTime = sliderFadeInTime + 10;
+    const maxAutoDebugOpacity = 0.3;
 
     // Calculate brightness based on time
     function calculateBrightness(elapsed: number): number {
@@ -196,7 +197,7 @@ export function initializeAnimation(document: Document) {
         }
 
         if(elapsed > sliderFadeInTime && elapsed < sliderFadeInEndTime) {
-            const val = (elapsed - sliderFadeInTime) / (sliderFadeInEndTime - sliderFadeInTime);
+            const val = maxAutoDebugOpacity * (elapsed - sliderFadeInTime) / (sliderFadeInEndTime - sliderFadeInTime);
             animationContext.debugBodyContext.bodyOpacity = val;
             animationContext.debugBodyContext.lineOpacity = val;
         }
