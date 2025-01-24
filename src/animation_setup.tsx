@@ -43,44 +43,51 @@ export function initializeAnimation(document: Document) {
     // Snow effect
     const snowEffect = new SnowEffect(scene);
 
+    // Create container for overlays and slider
+    const container = document.createElement('div');
+    container.className = `
+        absolute top-12 left-2 bg-black/50 text-white rounded-lg p-2 space-y-2
+        overflow-hidden hidden transition-[max-height] duration-500 ease-in-out
+    `;
+    document.body.appendChild(container);
+
+    // Create hamburger button
+    const hamburger = document.createElement('button');
+    hamburger.className = `
+        absolute top-2 left-2 bg-black/70 text-white rounded-lg p-2 text-sm flex items-center
+        focus:outline-none transition-transform duration-300 ease-in-out
+    `;
+    hamburger.innerText = '☰'; // Hamburger icon
+    document.body.appendChild(hamburger);
+
+    // Add toggle functionality to the hamburger menu
+    hamburger.addEventListener('click', () => {
+        const isHidden = container.classList.contains('hidden');
+        container.classList.toggle('hidden', !isHidden);
+        hamburger.classList.toggle('rotate-90', !isHidden); // Rotate icon when expanded
+    });
+
     // Add overlays
     const overlay = document.createElement('div');
-    overlay.style.position = 'absolute';
-    overlay.style.top = '10px';
-    overlay.style.left = '10px';
-    overlay.style.color = 'white';
-    overlay.style.padding = '10px';
-    overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
-    overlay.style.borderRadius = '5px';
+    overlay.className = `p-2 bg-black/50 rounded text-sm`;
     overlay.innerText = 'Physics Timesteps: 0';
-    document.body.appendChild(overlay);
+    container.appendChild(overlay);
 
     const volumeOverlay = document.createElement('div');
-    volumeOverlay.style.position = 'absolute';
-    volumeOverlay.style.top = '40px';
-    volumeOverlay.style.left = '10px';
-    volumeOverlay.style.color = 'white';
-    volumeOverlay.style.padding = '10px';
-    volumeOverlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
-    volumeOverlay.style.borderRadius = '5px';
+    volumeOverlay.className = `p-2 bg-black/50 rounded text-sm`;
     volumeOverlay.innerText = 'Mic Volume: 0';
-    document.body.appendChild(volumeOverlay);
+    container.appendChild(volumeOverlay);
 
     // Add slider
     const sliderContainer = document.createElement('div');
-    sliderContainer.style.position = 'absolute';
-    sliderContainer.style.top = '90px';
-    sliderContainer.style.left = '10px';
-    sliderContainer.style.color = 'white';
-    sliderContainer.style.padding = '10px';
-    sliderContainer.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
-    sliderContainer.style.borderRadius = '5px';
-    sliderContainer.style.display = animationContext.sliderIsVis ? 'block' : 'none';
-    sliderContainer.style.pointerEvents = animationContext.sliderIsVis ? 'auto' : 'none';
-    
+    sliderContainer.className = `
+        p-2 bg-black/50 rounded text-sm flex items-center space-x-2
+    `;
+    sliderContainer.style.display = animationContext.sliderIsVis ? 'flex' : 'none';
+
     const sliderLabel = document.createElement('label');
-    sliderLabel.innerText = 'Debug Opacity ';
-    sliderLabel.style.marginRight = '10px';
+    sliderLabel.className = `mr-2`;
+    sliderLabel.innerText = 'Debug Opacity';
 
     const slider = document.createElement('input');
     slider.type = 'range';
@@ -88,35 +95,41 @@ export function initializeAnimation(document: Document) {
     slider.max = '1';
     slider.step = '0.01';
     slider.value = `${animationContext.debugBodyContext.lineOpacity}`;
+    slider.className = `w-full`;
     slider.addEventListener('input', () => {
         const value = parseFloat(slider.value);
         animationContext.debugBodyContext.lineOpacity = value;
         animationContext.debugBodyContext.bodyOpacity = value;
-        // console.log(`Brightness Slider Value: ${value}`);
     });
 
     sliderContainer.appendChild(sliderLabel);
     sliderContainer.appendChild(slider);
-    document.body.appendChild(sliderContainer);
+    container.appendChild(sliderContainer);
+
+
+
 
     // Create scrolling overlay
     const scrollingOverlay = document.createElement('div');
-    scrollingOverlay.style.position = 'absolute';
-    scrollingOverlay.style.bottom = '20px';
-    scrollingOverlay.style.left = '10%'; // Set left and right padding instead of centering
-    scrollingOverlay.style.right = '10%'; // This ensures 80% width dynamically
-    scrollingOverlay.style.height = '15%';
-    scrollingOverlay.style.overflowY = 'auto';
-    scrollingOverlay.style.padding = '10px';
-    scrollingOverlay.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
-    scrollingOverlay.style.color = 'white';
-    scrollingOverlay.style.borderRadius = '10px';
-    scrollingOverlay.style.fontSize = '14px';
-    scrollingOverlay.style.lineHeight = '1.5';
-    scrollingOverlay.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.3)';
-    scrollingOverlay.className = 'scrolling-overlay'; // Add a class for custom styles
-    document.body.appendChild(scrollingOverlay);
+    scrollingOverlay.className = `
+        absolute bottom-5 left-[10%] right-[10%] h-[10%] overflow-y-auto p-2
+        bg-black/70 text-white rounded-lg text-sm leading-relaxed
+        shadow-md transition-all duration-300 ease-in-out
+    `;
 
+    // Add mouseover and mouseout event listeners
+    scrollingOverlay.addEventListener('mouseover', () => {
+        scrollingOverlay.classList.remove('h-[10%]');
+        scrollingOverlay.classList.add('h-[25%]');
+    });
+
+    scrollingOverlay.addEventListener('mouseout', () => {
+        scrollingOverlay.classList.remove('h-[25%]');
+        scrollingOverlay.classList.add('h-[10%]');
+    });
+
+    // Append to the document body
+    document.body.appendChild(scrollingOverlay);
 
     scrollingOverlay.innerHTML = getReadmeContent();
 
