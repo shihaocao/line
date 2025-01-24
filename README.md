@@ -156,3 +156,8 @@ Here's a screenshot with the slider.
 Holy cow I have words at the bottom! I was struggling to get the format right, everything was showing up as if it was just <p>, but it turns out the reason it wasn't working was that I didn't define all the tags and classes and such in my styles file. Wow. That's wild. But glad I know now!
 
 ![Textbox works!](documentation/textbox.jpg)
+
+# 01/23
+
+I had a bunch of trouble getting CSS to work, for example the real reason why h2 wasn't bigger than p was that I actually had tailwind css sneaking around in my `index.html`. I discovered this using inspect element. What a powerful tool. I have since doubled down on using tailwind css and so far it has been a good experience.
+
