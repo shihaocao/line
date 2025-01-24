@@ -2,7 +2,7 @@ export function getReadmeContent() {
     return `
         <h2>Listen to the Line</h2>
         <p>In late 2024, I went to a Porter Robinson concert, and there was a line that was moving and shimmering that really captivated me.
-        The beauty of line was fragile, and it reminded me of how delicate the moment was. Each moment of the line was unique -- emphemerality is it's beauty.
+        The beauty of line was fragile, and it reminded me of how delicate the moment was. Each moment of the line was unique -- emphemerality is beauty.
         I knew then that I wanted to be able to capture that feeling and recreate it.</p>
 
         <p>In homage to the Three Body Problem, I knew that was what I wanted as the underlying physics driving the simulation. Everything else followed trying to pursue two more principles:
