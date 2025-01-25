@@ -4,7 +4,7 @@ import {animationContext, BodyContext} from './context.tsx';
 const budgetBloomFactor = 0.07;
 const budgetBloomSizeFactor = 2;
 const maxLineOpacity = 0.8;
-const maxLinePoints = 6000;
+const maxLinePoints = 600;
 
 export default class Body {
     enable_sphere: boolean;
@@ -170,7 +170,7 @@ export default class Body {
             this.opacityArray[i] = (1 - age / this.maxPoints) * this.bodyContext.lineOpacity;
         }
 
-        console.log(`line opacicty in body: ${this.bodyContext.lineOpacity}`);
+        // console.log(`line opacicty in body: ${this.bodyContext.lineOpacity}`);
 
         // Increment the index and wrap around if necessary (circular buffer)
         this.currentPointIndex = (this.currentPointIndex + 1) % this.maxPoints;

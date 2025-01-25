@@ -1,13 +1,13 @@
 import * as THREE from 'three';
 
-const range = 10;
-const y_range = 30;
+const range = 5;
+const y_range = 11;
 const fall_speed = 0.008;
 const floor_height = -2.6;
-const particleCount = 3000;
+const particleCount = 250;
 const particle_dim = 0.02;
 const rotation_multiplier = 0.1;
-const stationary_duration = 4000; // Number of updates to stay on the ground
+const stationary_duration = 300; // Number of updates to stay on the ground
 
 class SnowEffect {
     private snowflakes: THREE.InstancedMesh;
@@ -45,7 +45,7 @@ class SnowEffect {
                     Math.random() * rotation_multiplier - rotation_multiplier / 2
                 )
         );
-        this.stationaryTimers = new Int32Array(particleCount).fill(0);
+        this.stationaryTimers = new Int32Array(particleCount).fill(stationary_duration);
         this.opacities = new Float32Array(particleCount).fill(0.8);
 
         for (let i = 0; i < particleCount; i++) {
@@ -105,28 +105,19 @@ class SnowEffect {
     
             if (dummy.position.y <= floor_height) {
                 if (this.stationaryTimers[i] === 0) {
-                    this.velocities[i] = 0;
-                    dummy.position.y = floor_height;
+                    dummy.position.y = y_range
                     this.stationaryTimers[i] = stationary_duration;
+                    this.opacities[i] = 0.8;
+                    this.velocities[i] = Math.random() * fall_speed + fall_speed / 5;
                 } else if (this.stationaryTimers[i] > 0) {
                     this.stationaryTimers[i]--;
                     this.opacities[i] = Math.max(0, this.opacities[i] - 0.8 / stationary_duration);
-    
-                    if (this.stationaryTimers[i] === 0) {
-                        dummy.position.set(
-                            Math.random() * range - range / 2,
-                            range,
-                            Math.random() * range - range / 2
-                        );
-                        this.velocities[i] = Math.random() * fall_speed + fall_speed / 5;
-                        this.opacities[i] = 0.8;
-                        this.rotationQuaternions[i].identity(); // Reset rotation
-                    }
+                    this.velocities[i] = 0;
                 }
             } else {
                 dummy.position.y -= this.velocities[i];
     
-                if (this.stationaryTimers[i] === 0) { // Only update rotation if not stationary
+                if (this.stationaryTimers[i] != 0) { // Only update rotation if not stationary
                     const axis = this.rotationRates[i];
                     const deltaQuat = new THREE.Quaternion().setFromAxisAngle(axis.normalize(), axis.length() * rotation_multiplier);
                     this.rotationQuaternions[i].multiply(deltaQuat);

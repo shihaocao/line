@@ -173,7 +173,7 @@ export function initializeAnimation(document: Document) {
     let lastTime = performance.now();
     const targetFPS = 60;
     const timeStep = 1 / targetFPS;
-    const physicsUpdatesPerFrame = 10;
+    const physicsUpdatesPerFrame = 1;
     const physicsMultiplier = 1.2;
     const physicsTimeStep = (physicsMultiplier * timeStep) / physicsUpdatesPerFrame;
 

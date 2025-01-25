@@ -161,3 +161,18 @@ Holy cow I have words at the bottom! I was struggling to get the format right, e
 
 I had a bunch of trouble getting CSS to work, for example the real reason why h2 wasn't bigger than p was that I actually had tailwind css sneaking around in my `index.html`. I discovered this using inspect element. What a powerful tool. I have since doubled down on using tailwind css and so far it has been a good experience.
 
+# 01/24
+
+I used the performance tab of chrome to do a deep dive on why my stuff was slow. I didn't know how to use it, and after a YouTube tutorial holy cow this is so nice. WebDevs really have it nice. The tooling is just so good. It was really cool to have a flamegraph so easily accessible without having to install anything!
+
+I found a few relics:
+- I upped the number of physics updates per frame to try and eliminate gaps in my lines originally, this added a lot of compute overhead - I should just fix this a different way.
+  - So to fix it, I went back to one physics update per frame.
+- I had added hella snowflakes in order to make the snow look legit, but my GPT generated snowflake code was just terrible. I should have written it manually myself the first time haha.
+  - I decreased the number of snowflakes drastically (by about 10x), I decreased the envelope they were rendered in significantly and time on ground to maintain density. People won't notice unless they zoom out, and I think that's a bit of an easter egg!
+- I also got to decrease the total number of line points now that I am running fewer timesteps. Updating a giant array of opacities on the CPU sucked. I should really figure out how to move that to a shader some other time.
+- Turned off console logging
+
+Next to do is I really like the mobile pixelation effect. I want to figure out how to use WebGL render targets to try and implement that effect on desktop while maintaining size.
+
+![Using Chrome Performance!](documentation/use_chrome_performance.jpg)
