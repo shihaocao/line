@@ -20,10 +20,16 @@ export function initializeAnimation(document: Document) {
 
     // M2
     const renderer = new THREE.WebGLRenderer();
+    //  I'm not sure if this does anything
+    // const renderer = new THREE.WebGLRenderer({ antialias: true });
+
     renderer.setSize(window.innerWidth, window.innerHeight);
-    const height = 180; // 480p height
-    const width = 16*height/9;
+    // const height = animationContext.render_buffer_height;
+    animationContext.render_aspect_ratio = window.innerWidth/window.innerHeight;
+    const height = animationContext.render_buffer_height_max;
+    const width = animationContext.render_aspect_ratio * height;
     renderer.setDrawingBufferSize(width, height, window.devicePixelRatio);
+
     document.body.appendChild(renderer.domElement);
 
     // M1
@@ -49,7 +55,7 @@ export function initializeAnimation(document: Document) {
         1.5, 0.4, 0.85
     );
     bloomPass.threshold = 0;
-    bloomPass.strength = 2;
+    bloomPass.strength = 5;
     bloomPass.radius = 0.2;
     composer.addPass(bloomPass);
 
@@ -74,8 +80,15 @@ export function initializeAnimation(document: Document) {
 
     const start_time = performance.now();
 
+    function update_animation_params() {
+        const height = animationContext.render_buffer_height;
+        const width = height * animationContext.render_aspect_ratio;
+        renderer.setDrawingBufferSize(width, height, window.devicePixelRatio);
+    }
+
     function animate() {
         requestAnimationFrame(animate);
+        update_animation_params();
 
         const currentTime = performance.now();
         const elapsed = (currentTime - start_time) / 1000; // Convert to seconds

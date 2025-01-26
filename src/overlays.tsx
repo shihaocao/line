@@ -131,6 +131,18 @@ export function setup_overlays(document: Document) {
         });    
     }
 
+    {
+        const slider = add_slider('Render Res');
+        slider.min = '50';
+        slider.max = `${animationContext.render_buffer_height_max}`
+        slider.value = `${animationContext.render_buffer_height}`;
+        // slider.value = `${animationContext.debugBodyContext.lineOpacity}`;
+        slider.addEventListener('input', () => {
+            const value = parseFloat(slider.value);
+            animationContext.render_buffer_height = value;
+        });
+    }
+
     // I don't really like drag because my phsyics engine doesn't simulate drag well.
     // Nor do I simulate it well
     // {

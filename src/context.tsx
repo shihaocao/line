@@ -13,6 +13,10 @@ export class AnimationContext {
     public camera_rot: number = 1;
     public snow_speed: number = 1;
 
+    public render_buffer_height_max: number = 800; // I'm too lazy to make a constants file
+    public render_buffer_height: number = 400;
+    public render_aspect_ratio: number = 16/9;
+
     public time_elapsed: number = 0;
     public brightness: number = 1; // Default brightness
     public micVolume: number = 0.5; // Default mic volume
