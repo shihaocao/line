@@ -97,12 +97,12 @@ export function setupBodiesAndSun(scene: THREE.Scene, context: typeof animationC
         0xffcc00,
         sunMass,
         scene,
-        debug,
         false,
-        true,
+        false,
+        true, // enable anchor
         false,
         context,
-        context.debugBodyContext,
+        context.offBodyContext,
     );
     bodies.push(sun);
 

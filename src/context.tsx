@@ -10,8 +10,7 @@ export class AnimationContext {
 
     public mainBodyContext: BodyContext = new BodyContext();
     public debugBodyContext: BodyContext = new BodyContext();
-
-    public sliderIsVis: boolean = false;
+    public offBodyContext: BodyContext = new BodyContext();
     // No constructor logic needed unless defaults are complex
 }
 
@@ -19,3 +18,5 @@ export const animationContext = new AnimationContext();
 animationContext.debugBodyContext.bodyOpacity = 0;
 animationContext.debugBodyContext.lineOpacity = 0;
 animationContext.mainBodyContext.lineOpacity = 0.5;
+animationContext.offBodyContext.bodyOpacity = 0;
+animationContext.offBodyContext.lineOpacity = 0;

@@ -1,13 +1,13 @@
 import * as THREE from 'three';
 
-const range = 5;
+const range = 8;
 const y_range = 11;
 const fall_speed = 0.008;
-const floor_height = -2.6;
-const particleCount = 250;
+const floor_height = -3.0;
+const particleCount = 600;
 const particle_dim = 0.02;
 const rotation_multiplier = 0.1;
-const stationary_duration = 300; // Number of updates to stay on the ground
+const stationary_duration = 400; // Number of updates to stay on the ground
 
 class SnowEffect {
     private snowflakes: THREE.InstancedMesh;

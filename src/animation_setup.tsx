@@ -15,7 +15,8 @@ export function initializeAnimation(document: Document) {
     // Create scene, camera, and renderer
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.z = 5;
+    camera.position.z = 6
+    camera.position.y = 2; // up height
 
     const renderer = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -83,7 +84,7 @@ export function initializeAnimation(document: Document) {
     sliderContainer.className = `
         p-2 bg-black/50 rounded text-sm flex items-center space-x-2
     `;
-    sliderContainer.style.display = animationContext.sliderIsVis ? 'flex' : 'none';
+    sliderContainer.style.display = 'flex';
 
     const sliderLabel = document.createElement('label');
     sliderLabel.className = `mr-2`;
@@ -205,22 +206,10 @@ export function initializeAnimation(document: Document) {
     const start_time = performance.now();
 
     function updateSliderVisibility(elapsed: number) {
-        if(elapsed > sliderFadeInTime) {
-            animationContext.sliderIsVis = true;
-        }
-
         if(elapsed > sliderFadeInTime && elapsed < sliderFadeInEndTime) {
             const val = maxAutoDebugOpacity * (elapsed - sliderFadeInTime) / (sliderFadeInEndTime - sliderFadeInTime);
             animationContext.debugBodyContext.bodyOpacity = val;
             animationContext.debugBodyContext.lineOpacity = val;
-        }
-
-        if (animationContext.sliderIsVis) {
-            sliderContainer.style.display = 'block';          // Show slider
-            sliderContainer.style.pointerEvents = 'auto';     // Enable interaction
-        } else {
-            sliderContainer.style.display = 'none';           // Hide slider
-            sliderContainer.style.pointerEvents = 'none';     // Disable interaction
         }
     }    
 
