@@ -22,7 +22,7 @@ export class AnimationContext {
     public micVolume: number = 0.5; // Default mic volume
     public debugOpacity: number = 0;
 
-    public debug_fade_in_end_s: number = 15;
+    public debug_fade_in_end_s: number = 25;
     public debug_fade_in_start_s: number = this.debug_fade_in_end_s - 5;
     public debug_fade_out_end_s: number = this.debug_fade_in_end_s + 3;
 
