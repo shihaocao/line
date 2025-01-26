@@ -65,7 +65,7 @@ enterButton.addEventListener('click', () => {
         setInterval(() => {
             const volume = micVolume.updateVolume();
             animationContext.micVolume = volume;
-            console.log('Average Volume:', volume);
+            // console.log('Average Volume:', volume);
         }, 20); // Update volume every 100ms
     }, 1000); // Match the fade-out duration (1s)
 });

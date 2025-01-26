@@ -26,6 +26,17 @@ export function setup_overlays(document: Document) {
         hamburger.classList.toggle('rotate-90', !isHidden); // Rotate icon when expanded
     });
 
+    // Flash the hamburger button after 10 seconds
+    setTimeout(() => {
+        // Add a flashing animation class
+        hamburger.classList.add('flash');
+        
+        // Remove the flashing class after a short duration
+        setTimeout(() => {
+            hamburger.classList.remove('flash');
+        }, 1000);
+    }, animationContext.debug_fade_in_end_s * 1000); // Wait 10 seconds before starting the flash
+
     // Add overlays
     const overlay = document.createElement('div');
     overlay.className = `p-2 bg-black/50 rounded-lg text-sm`;
@@ -189,13 +200,19 @@ export function setup_overlays(document: Document) {
 
     // Effects
 
-    const sliderFadeInTime = 15;
-    const sliderFadeInEndTime = sliderFadeInTime + 10;
     const maxAutoDebugOpacity = 0.3;
-
-    function updateSliderVisibility(elapsed: number) {
-        if(elapsed > sliderFadeInTime && elapsed < sliderFadeInEndTime) {
-            const val = maxAutoDebugOpacity * (elapsed - sliderFadeInTime) / (sliderFadeInEndTime - sliderFadeInTime);
+    const a = animationContext;
+    const fade_in_dur = a.debug_fade_in_end_s - a.debug_fade_in_start_s;
+    const fade_out_dur = a.debug_fade_out_end_s - a.debug_fade_in_end_s;
+    function debugLineVisibility(elapsed: number) {
+        if(elapsed > a.debug_fade_in_start_s && elapsed < a.debug_fade_in_end_s) {
+            // Fade in
+            const val = maxAutoDebugOpacity * (elapsed - a.debug_fade_in_start_s) / (fade_in_dur);
+            animationContext.debugBodyContext.bodyOpacity = val;
+            animationContext.debugBodyContext.lineOpacity = val;
+        } else if (elapsed > a.debug_fade_in_end_s && elapsed < a.debug_fade_out_end_s) {
+            // Fade out
+            const val = maxAutoDebugOpacity * (a.debug_fade_out_end_s - elapsed) / (fade_out_dur);
             animationContext.debugBodyContext.bodyOpacity = val;
             animationContext.debugBodyContext.lineOpacity = val;
         }
@@ -221,7 +238,7 @@ export function setup_overlays(document: Document) {
 
     // Return an update function
     return function update_overlays() {
-        updateSliderVisibility(animationContext.time_elapsed);
+        debugLineVisibility(animationContext.time_elapsed);
         animationContext.brightness = calculateBrightness(animationContext.time_elapsed);
 
         fadeMask.style.opacity = `${1 - animationContext.brightness}`;
