@@ -175,11 +175,46 @@ export function setup_overlays(document: Document) {
     `;
     document.body.appendChild(fadeMask);
 
+    // Effects
+
+    const sliderFadeInTime = 15;
+    const sliderFadeInEndTime = sliderFadeInTime + 10;
+    const maxAutoDebugOpacity = 0.3;
+
+    function updateSliderVisibility(elapsed: number) {
+        if(elapsed > sliderFadeInTime && elapsed < sliderFadeInEndTime) {
+            const val = maxAutoDebugOpacity * (elapsed - sliderFadeInTime) / (sliderFadeInEndTime - sliderFadeInTime);
+            animationContext.debugBodyContext.bodyOpacity = val;
+            animationContext.debugBodyContext.lineOpacity = val;
+        }
+    }
+
+    // Brightness timing markers
+    const fadeInEndTime = 2.0; // seconds
+    const fadeOutStartTime = 160.0; // seconds
+    const fadeOutEndTime = 180.0; // seconds
+
+    // Calculate brightness based on time
+    function calculateBrightness(elapsed: number): number {
+        if (elapsed <= fadeInEndTime) {
+            return elapsed / fadeInEndTime; // Fade in: interpolate from 0 to 1
+        } else if (elapsed >= fadeOutStartTime && elapsed <= fadeOutEndTime) {
+            return 1 - (elapsed - fadeOutStartTime) / (fadeOutEndTime - fadeOutStartTime); // Fade out: 1 to 0
+        } else if (elapsed > fadeOutEndTime) {
+            return 0; // After fade out: brightness is 0
+        } else {
+            return 1; // Between fade in and fade out: brightness is 1
+        }
+    }
+
     // Return an update function
     return function update_overlays() {
+        updateSliderVisibility(animationContext.time_elapsed);
+        animationContext.brightness = calculateBrightness(animationContext.time_elapsed);
+
         fadeMask.style.opacity = `${1 - animationContext.brightness}`;
 
         overlay.innerText = `Physics Timesteps: ${animationContext.physics_timestep}`;
-        volumeOverlay.innerText = `Mic Volume: ${animationContext.micVolume}`;
+        volumeOverlay.innerText = `Volume: ${animationContext.micVolume}`;
     };
 }

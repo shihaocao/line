@@ -54,38 +54,9 @@ export function initializeAnimation(document: Document) {
 
     let physicsTimestepCount = 0;
     let controlsLastUsedTime = performance.now();
-    const rotationSpeed = 0.005;
+    const rotationSpeed = 0.003;
 
-    // Brightness timing markers
-    const fadeInEndTime = 2.0; // seconds
-    const fadeOutStartTime = 160.0; // seconds
-    const fadeOutEndTime = 180.0; // seconds
-
-    const sliderFadeInTime = 15;
-    const sliderFadeInEndTime = sliderFadeInTime + 10;
-    const maxAutoDebugOpacity = 0.3;
-
-    // Calculate brightness based on time
-    function calculateBrightness(elapsed: number): number {
-        if (elapsed <= fadeInEndTime) {
-            return elapsed / fadeInEndTime; // Fade in: interpolate from 0 to 1
-        } else if (elapsed >= fadeOutStartTime && elapsed <= fadeOutEndTime) {
-            return 1 - (elapsed - fadeOutStartTime) / (fadeOutEndTime - fadeOutStartTime); // Fade out: 1 to 0
-        } else if (elapsed > fadeOutEndTime) {
-            return 0; // After fade out: brightness is 0
-        } else {
-            return 1; // Between fade in and fade out: brightness is 1
-        }
-    }
     const start_time = performance.now();
-
-    function updateSliderVisibility(elapsed: number) {
-        if(elapsed > sliderFadeInTime && elapsed < sliderFadeInEndTime) {
-            const val = maxAutoDebugOpacity * (elapsed - sliderFadeInTime) / (sliderFadeInEndTime - sliderFadeInTime);
-            animationContext.debugBodyContext.bodyOpacity = val;
-            animationContext.debugBodyContext.lineOpacity = val;
-        }
-    }    
 
     function animate() {
         requestAnimationFrame(animate);
@@ -93,7 +64,6 @@ export function initializeAnimation(document: Document) {
         const currentTime = performance.now();
         const elapsed = (currentTime - start_time) / 1000; // Convert to seconds
         animationContext.time_elapsed = elapsed;
-        updateSliderVisibility(elapsed);
         overlay_update_func();
 
         // Run multiple physics updates within each animation frame
@@ -104,14 +74,6 @@ export function initializeAnimation(document: Document) {
             physicsTimestepCount++;
             animationContext.physics_timestep = physicsTimestepCount;
         }
-
-        // Update overlays
-        // overlay.innerText = `Physics Timesteps: ${physicsTimestepCount}`;
-        // volumeOverlay.innerText = `Audio Volume: ${animationContext.micVolume}`;
-        animationContext.brightness = calculateBrightness(elapsed);
-        // console.log('Brightness:', animationContext.brightness);
-
-        // Update fade mask opacity (inverted brightness)
 
         const timeSinceLastUse = currentTime - controlsLastUsedTime;
         if (timeSinceLastUse > 2000) {
