@@ -18,9 +18,25 @@ export function initializeAnimation(document: Document) {
     camera.position.z = 6
     camera.position.y = 2; // up height
 
+    // M2
     const renderer = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
+    const height = 180; // 480p height
+    const width = 16*height/9;
+    renderer.setDrawingBufferSize(width, height, window.devicePixelRatio);
     document.body.appendChild(renderer.domElement);
+
+    // M1
+    // const renderer = new THREE.WebGLRenderer();
+    // renderer.setSize(854, 480); // Set drawing buffer size to 480p
+    // renderer.domElement.style.width = '100%'; // Stretch canvas to full window width
+    // renderer.domElement.style.height = '100%'; // Stretch canvas to full window height
+    // document.body.appendChild(renderer.domElement);
+
+    // OG
+    // const renderer = new THREE.WebGLRenderer();
+    // renderer.setSize(window.innerWidth, window.innerHeight);
+    // document.body.appendChild(renderer.domElement);
 
     const controls = new OrbitControls(camera, renderer.domElement);
 
