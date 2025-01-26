@@ -1,4 +1,5 @@
 /* styles.css */
+@import "tailwindcss";
 
 /* Hide the scrollbar by default */
 .scrolling-overlay::-webkit-scrollbar {
