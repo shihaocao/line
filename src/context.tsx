@@ -4,6 +4,8 @@ export class BodyContext {
 }
 
 export class AnimationContext {
+    public physics_timestep: number = 0;
+    public time_elapsed: number = 0;
     public brightness: number = 1; // Default brightness
     public micVolume: number = 0.5; // Default mic volume
     public debugOpacity: number = 0;
