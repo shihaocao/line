@@ -78,7 +78,7 @@ class SnowEffect {
         const groundGeometry = new THREE.PlaneGeometry(range * 4, range * 4);
         const groundMaterial = new THREE.MeshStandardMaterial({
             color: 0x333333, // Dark gray base color
-            roughness: 0.8,  // Matte surface
+            roughness: 0.9,  // Matte surface
             metalness: 0,    // Non-metallic
         });
 

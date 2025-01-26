@@ -11,7 +11,7 @@ export class AnimationContext {
     public drag_multipler: number = 1;
 
     public camera_rot: number = 1;
-    public snow_speed: number = 1;
+    public snow_speed: number = 0.5;
 
     public render_buffer_height_max: number = 800; // I'm too lazy to make a constants file
     public render_buffer_height: number = 400;

@@ -13,7 +13,7 @@ export function setup_overlays(document: Document) {
     // Create hamburger button
     const hamburger = document.createElement('button');
     hamburger.className = `
-        absolute top-2 left-2 bg-black/70 text-white rounded-lg p-2 text-sm flex items-center 
+        absolute top-2 left-2 bg-black/70 text-white rounded-lg p-2 text-md flex items-center 
         focus:outline-none transition-transform duration-300 ease-in-out
     `;
     hamburger.innerText = '☰'; // Hamburger icon
