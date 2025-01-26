@@ -1,13 +1,11 @@
-
 import { getReadmeContent } from './blurb.tsx';
-import {animationContext} from './context.tsx';
+import { animationContext } from './context.tsx';
 
 export function setup_overlays(document: Document) {
-
     // Create container for overlays and slider
     const container = document.createElement('div');
     container.className = `
-        absolute top-12 left-2 bg-black/50 text-white rounded-lg p-2 space-y-2
+        absolute top-12 left-2 bg-black/50 text-white rounded-lg p-2 space-y-2 
         overflow-hidden hidden transition-[max-height] duration-500 ease-in-out
     `;
     document.body.appendChild(container);
@@ -15,7 +13,7 @@ export function setup_overlays(document: Document) {
     // Create hamburger button
     const hamburger = document.createElement('button');
     hamburger.className = `
-        absolute top-2 left-2 bg-black/70 text-white rounded-lg p-2 text-sm flex items-center
+        absolute top-2 left-2 bg-black/70 text-white rounded-lg p-2 text-sm flex items-center 
         focus:outline-none transition-transform duration-300 ease-in-out
     `;
     hamburger.innerText = '☰'; // Hamburger icon
@@ -30,50 +28,69 @@ export function setup_overlays(document: Document) {
 
     // Add overlays
     const overlay = document.createElement('div');
-    overlay.className = `p-2 bg-black/50 rounded text-sm`;
+    overlay.className = `p-2 bg-black/50 rounded-lg text-sm`;
     overlay.innerText = 'Physics Timesteps: 0';
     container.appendChild(overlay);
 
     const volumeOverlay = document.createElement('div');
-    volumeOverlay.className = `p-2 bg-black/50 rounded text-sm`;
+    volumeOverlay.className = `p-2 bg-black/50 rounded-lg text-sm`;
     volumeOverlay.innerText = 'Mic Volume: 0';
     container.appendChild(volumeOverlay);
 
-    // Add slider
-    const sliderContainer = document.createElement('div');
-    sliderContainer.className = `
-        p-2 bg-black/50 rounded text-sm flex items-center space-x-2
-    `;
-    sliderContainer.style.display = 'flex';
+    function add_slider(label_name: string) {
+        // Add slider
+        const sliderContainer = document.createElement('div');
+        sliderContainer.className = `
+            p-2 bg-black/50 rounded-lg text-sm flex items-center space-x-2
+        `;
 
-    const sliderLabel = document.createElement('label');
-    sliderLabel.className = `mr-2`;
-    sliderLabel.innerText = 'Debug Opacity';
+        const sliderLabel = document.createElement('label');
+        sliderLabel.className = `mr-2`;
+        sliderLabel.innerText = label_name;
+        const slider = document.createElement('input');
+        slider.type = 'range';
+ 
+        slider.step = '0.01';
+        slider.className = `w-full`;
 
-    const slider = document.createElement('input');
-    slider.type = 'range';
-    slider.min = '0';
-    slider.max = '1';
-    slider.step = '0.01';
-    slider.value = `${animationContext.debugBodyContext.lineOpacity}`;
-    slider.className = `w-full`;
-    slider.addEventListener('input', () => {
-        const value = parseFloat(slider.value);
-        animationContext.debugBodyContext.lineOpacity = value;
-        animationContext.debugBodyContext.bodyOpacity = value;
-    });
+        sliderContainer.appendChild(sliderLabel);
+        sliderContainer.appendChild(slider);
+        container.appendChild(sliderContainer);
 
-    sliderContainer.appendChild(sliderLabel);
-    sliderContainer.appendChild(slider);
-    container.appendChild(sliderContainer);
+        return slider;
+    }
+
+    {
+        const slider = add_slider('Show Debug');
+        slider.min = '0';
+        slider.max = '1';
+        slider.value = `${animationContext.debugBodyContext.lineOpacity}`;
+        slider.addEventListener('input', () => {
+            const value = parseFloat(slider.value);
+            animationContext.debugBodyContext.lineOpacity = value;
+            animationContext.debugBodyContext.bodyOpacity = value;
+        });    
+    }
+    {
+        const slider = add_slider('Tail Length');
+        slider.min = '0';
+        slider.max = '1';
+        // slider.value = `${animationContext.debugBodyContext.lineOpacity}`;
+        slider.addEventListener('input', () => {
+            const value = parseFloat(slider.value);
+            animationContext.debugBodyContext.tail_length_factor = value;
+        });    
+    }
+
 
     // Create scrolling overlay
     const scrollingOverlay = document.createElement('div');
     scrollingOverlay.className = `
-        absolute bottom-5 left-[10%] right-[10%] h-[10%] overflow-y-auto p-2
-        bg-black/70 text-white rounded-lg text-sm leading-relaxed
+        absolute bottom-5 left-[10%] right-[10%] h-[10%] overflow-y-auto p-2 
+        bg-black/70 text-white rounded-lg text-sm leading-relaxed 
         shadow-md transition-all duration-300 ease-in-out
     `;
+    scrollingOverlay.innerHTML = getReadmeContent();
 
     // Add mouseover and mouseout event listeners
     scrollingOverlay.addEventListener('mouseover', () => {
@@ -86,21 +103,14 @@ export function setup_overlays(document: Document) {
         scrollingOverlay.classList.add('h-[10%]');
     });
 
-    // Append to the document body
     document.body.appendChild(scrollingOverlay);
 
-    scrollingOverlay.innerHTML = getReadmeContent();
-
-    // // Add fade mask
+    // Add fade mask
     const fadeMask = document.createElement('div');
-    fadeMask.style.position = 'absolute';
-    fadeMask.style.top = '0';
-    fadeMask.style.left = '0';
-    fadeMask.style.width = '100%';
-    fadeMask.style.height = '100%';
-    fadeMask.style.backgroundColor = 'black';
-    fadeMask.style.pointerEvents = 'none'; // Allow interaction with underlying elements
-    fadeMask.style.transition = 'opacity 0.1s ease'; // Smooth transitions
+    fadeMask.className = `
+        absolute top-0 left-0 w-full h-full bg-black pointer-events-none 
+        transition-opacity duration-100 ease-in-out
+    `;
     document.body.appendChild(fadeMask);
 
     // Return an update function
@@ -110,5 +120,4 @@ export function setup_overlays(document: Document) {
         overlay.innerText = `Physics Timesteps: ${animationContext.physics_timestep}`;
         volumeOverlay.innerText = `Mic Volume: ${animationContext.micVolume}`;
     };
-
 }

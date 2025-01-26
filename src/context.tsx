@@ -1,6 +1,7 @@
 export class BodyContext {
     public lineOpacity: number = 1;
     public bodyOpacity: number = 1;
+    public tail_length_factor: number = 1;
 }
 
 export class AnimationContext {

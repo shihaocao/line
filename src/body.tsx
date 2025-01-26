@@ -167,7 +167,10 @@ export default class Body {
         // Update opacity values based on age of the point
         for (let i = 0; i < this.maxPoints; i++) {
             const age = (this.maxPoints + this.currentPointIndex - i) % this.maxPoints;
-            this.opacityArray[i] = (1 - age / this.maxPoints) * this.bodyContext.lineOpacity;
+            const age_ratio = age / this.maxPoints;
+            const opacicty_penalty = age_ratio / this.bodyContext.tail_length_factor;;
+            const nom_opacity = (1 - opacicty_penalty) * this.bodyContext.lineOpacity;
+            this.opacityArray[i] = Math.max(0, nom_opacity); // Floor the value at 0
         }
 
         // console.log(`line opacicty in body: ${this.bodyContext.lineOpacity}`);
