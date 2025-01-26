@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { animationContext } from './context';
 
 const range = 8;
 const y_range = 11;
@@ -115,7 +116,7 @@ class SnowEffect {
                     this.velocities[i] = 0;
                 }
             } else {
-                dummy.position.y -= this.velocities[i];
+                dummy.position.y -= this.velocities[i] * animationContext.snow_speed;
     
                 if (this.stationaryTimers[i] != 0) { // Only update rotation if not stationary
                     const axis = this.rotationRates[i];

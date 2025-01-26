@@ -109,7 +109,7 @@ export class System {
             // const dist_penalty = 1;
             const dist_penalty = 2 * dist_from_origin;
             // const speed_penalty = 1;
-            const force_magnitude = speed_penalty * dist_penalty * this.drag_coeff;
+            const force_magnitude = speed_penalty * dist_penalty * this.drag_coeff * this.context.drag_multipler;
             const force = direction.multiplyScalar(force_magnitude).negate();
             bodyA.acceleration.add(force);
         }
@@ -150,7 +150,8 @@ export class System {
             // const force_magnitude = -1 * 0.5*((dist_from_origin - 2) * (dist_from_origin-2) * (dist_from_origin+1));
             // const force_magnitude = -1 * Math.log(dist_from_origin+1); // pretty good
             const force_magnitude = -1 * sigmoid(dist_from_origin, 3); // i like this one too
-            const force = bodyA.position.clone().normalize().multiplyScalar(force_magnitude);
+            const modified_force_magnitude = force_magnitude * this.context.restoring_multiplier;
+            const force = bodyA.position.clone().normalize().multiplyScalar(modified_force_magnitude);
             bodyA.acceleration.add(force);
         }
 

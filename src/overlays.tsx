@@ -79,9 +79,71 @@ export function setup_overlays(document: Document) {
         slider.addEventListener('input', () => {
             const value = parseFloat(slider.value);
             animationContext.debugBodyContext.tail_length_factor = value;
+            animationContext.mainBodyContext.tail_length_factor = value;
         });    
     }
 
+    {
+        const slider = add_slider('Speed');
+        slider.min = '0.5';
+        slider.max = '2';
+        slider.value = `${animationContext.phsyics_multipler}`;
+        // slider.value = `${animationContext.debugBodyContext.lineOpacity}`;
+        slider.addEventListener('input', () => {
+            const value = parseFloat(slider.value);
+            animationContext.phsyics_multipler = value;
+        });    
+    }
+
+    {
+        const slider = add_slider('Restoring');
+        slider.min = '0.1';
+        slider.max = '3';
+        slider.value = `${animationContext.restoring_multiplier}`;
+        // slider.value = `${animationContext.debugBodyContext.lineOpacity}`;
+        slider.addEventListener('input', () => {
+            const value = parseFloat(slider.value);
+            animationContext.restoring_multiplier = value;
+        });    
+    }
+
+    {
+        const slider = add_slider('Camera Rot');
+        slider.min = '0.1';
+        slider.max = '2';
+        slider.value = `${animationContext.camera_rot}`;
+        // slider.value = `${animationContext.debugBodyContext.lineOpacity}`;
+        slider.addEventListener('input', () => {
+            const value = parseFloat(slider.value);
+            animationContext.camera_rot = value;
+        });    
+    }
+
+    {
+        const slider = add_slider('Snow Speed');
+        slider.min = '0.1';
+        slider.max = '3';
+        slider.value = `${animationContext.snow_speed}`;
+        // slider.value = `${animationContext.debugBodyContext.lineOpacity}`;
+        slider.addEventListener('input', () => {
+            const value = parseFloat(slider.value);
+            animationContext.snow_speed = value;
+        });    
+    }
+
+    // I don't really like drag because my phsyics engine doesn't simulate drag well.
+    // Nor do I simulate it well
+    // {
+    //     const slider = add_slider('Drag');
+    //     slider.min = '0.1';
+    //     slider.max = '1000';
+    //     slider.value = `${animationContext.drag_multipler}`;
+    //     // slider.value = `${animationContext.debugBodyContext.lineOpacity}`;
+    //     slider.addEventListener('input', () => {
+    //         const value = parseFloat(slider.value);
+    //         animationContext.restoring_multiplier = value;
+    //     });    
+    // }
 
     // Create scrolling overlay
     const scrollingOverlay = document.createElement('div');

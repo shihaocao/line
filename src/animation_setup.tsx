@@ -51,8 +51,6 @@ export function initializeAnimation(document: Document) {
     const targetFPS = 60;
     const timeStep = 1 / targetFPS;
     const physicsUpdatesPerFrame = 1;
-    const physicsMultiplier = 1.2;
-    const physicsTimeStep = (physicsMultiplier * timeStep) / physicsUpdatesPerFrame;
 
     let physicsTimestepCount = 0;
     let controlsLastUsedTime = performance.now();
@@ -100,6 +98,8 @@ export function initializeAnimation(document: Document) {
 
         // Run multiple physics updates within each animation frame
         for (let i = 0; i < physicsUpdatesPerFrame; i++) {
+            const physicsTimeStep = (animationContext.phsyics_multipler * timeStep) / physicsUpdatesPerFrame;
+
             system.update(physicsTimeStep);
             physicsTimestepCount++;
             animationContext.physics_timestep = physicsTimestepCount;
@@ -115,7 +115,7 @@ export function initializeAnimation(document: Document) {
 
         const timeSinceLastUse = currentTime - controlsLastUsedTime;
         if (timeSinceLastUse > 2000) {
-            camera.position.applyAxisAngle(new THREE.Vector3(0, 1, 0), rotationSpeed);
+            camera.position.applyAxisAngle(new THREE.Vector3(0, 1, 0), rotationSpeed * animationContext.camera_rot);
             camera.lookAt(scene.position);
         }
 

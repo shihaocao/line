@@ -6,6 +6,13 @@ export class BodyContext {
 
 export class AnimationContext {
     public physics_timestep: number = 0;
+    public phsyics_multipler: number = 1.2;
+    public restoring_multiplier: number = 1;
+    public drag_multipler: number = 1;
+
+    public camera_rot: number = 1;
+    public snow_speed: number = 1;
+
     public time_elapsed: number = 0;
     public brightness: number = 1; // Default brightness
     public micVolume: number = 0.5; // Default mic volume
