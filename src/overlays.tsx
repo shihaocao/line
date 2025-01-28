@@ -94,29 +94,29 @@ export function setup_overlays(document: Document) {
         });    
     }
 
-    {
-        const slider = add_slider('Speed');
-        slider.min = '0.5';
-        slider.max = '2';
-        slider.value = `${animationContext.phsyics_multipler}`;
-        // slider.value = `${animationContext.debugBodyContext.lineOpacity}`;
-        slider.addEventListener('input', () => {
-            const value = parseFloat(slider.value);
-            animationContext.phsyics_multipler = value;
-        });    
-    }
+    // {
+    //     const slider = add_slider('Speed');
+    //     slider.min = '0.5';
+    //     slider.max = '2';
+    //     slider.value = `${animationContext.phsyics_multipler}`;
+    //     // slider.value = `${animationContext.debugBodyContext.lineOpacity}`;
+    //     slider.addEventListener('input', () => {
+    //         const value = parseFloat(slider.value);
+    //         animationContext.phsyics_multipler = value;
+    //     });    
+    // }
 
-    {
-        const slider = add_slider('Restoring');
-        slider.min = '0.1';
-        slider.max = '3';
-        slider.value = `${animationContext.restoring_multiplier}`;
-        // slider.value = `${animationContext.debugBodyContext.lineOpacity}`;
-        slider.addEventListener('input', () => {
-            const value = parseFloat(slider.value);
-            animationContext.restoring_multiplier = value;
-        });    
-    }
+    // {
+    //     const slider = add_slider('Restoring');
+    //     slider.min = '0.1';
+    //     slider.max = '3';
+    //     slider.value = `${animationContext.restoring_multiplier}`;
+    //     // slider.value = `${animationContext.debugBodyContext.lineOpacity}`;
+    //     slider.addEventListener('input', () => {
+    //         const value = parseFloat(slider.value);
+    //         animationContext.restoring_multiplier = value;
+    //     });    
+    // }
 
     {
         const slider = add_slider('Camera Rot');
