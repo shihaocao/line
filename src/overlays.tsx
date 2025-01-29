@@ -168,27 +168,54 @@ export function setup_overlays(document: Document) {
     //     });    
     // }
 
-    // Create scrolling overlay
-    const scrollingOverlay = document.createElement('div');
-    scrollingOverlay.className = `
-        absolute bottom-5 left-[10%] right-[10%] h-[10%] overflow-y-auto p-2 
-        bg-black/70 text-white rounded-lg text-sm leading-relaxed 
+    // Create the container for the overlay and the toggle button
+    const overlayContainer = document.createElement('div');
+    overlayContainer.className = `
+        absolute bottom-5 left-[10%] right-[10%] overflow-hidden 
+        rounded-lg transparent text-white text-sm leading-relaxed 
         shadow-md transition-all duration-300 ease-in-out
     `;
+    overlayContainer.style.height = "2rem"; // Initial height (only showing the arrow)
+
+    // Create the toggle button
+    const toggleButton = document.createElement('div');
+    toggleButton.className = "w-full text-center cursor-pointer py-1";
+    toggleButton.style.backgroundColor = "transparent";
+    toggleButton.innerHTML = "▲"; // Initial arrow pointing up
+
+    // Create the scrolling overlay
+    const scrollingOverlay = document.createElement('div');
+    scrollingOverlay.className = `
+        overflow-y-auto p-2 transition-all duration-300 ease-in-out
+    `;
+    scrollingOverlay.style.backgroundColor = "transparent"
+    scrollingOverlay.style.height = "0"; // Initially hidden
+    scrollingOverlay.style.opacity = "0"; // Invisible until expanded
     scrollingOverlay.innerHTML = getReadmeContent();
 
-    // Add mouseover and mouseout event listeners
-    scrollingOverlay.addEventListener('mouseover', () => {
-        scrollingOverlay.classList.remove('h-[10%]');
-        scrollingOverlay.classList.add('h-[25%]');
+    // Toggle function for expanding/collapsing
+    let expanded = false;
+    toggleButton.addEventListener('click', () => {
+        expanded = !expanded;
+        if (expanded) {
+            const rem_height = 16;
+            const overlay_rem_height = 2+rem_height;
+            scrollingOverlay.style.height = `${rem_height}rem`; // Expanded height
+            scrollingOverlay.style.opacity = "1";
+            overlayContainer.style.height = `${overlay_rem_height}rem`; // Adjust container height
+            toggleButton.innerHTML = "▼"; // Change arrow direction
+        } else {
+            scrollingOverlay.style.height = "0";
+            scrollingOverlay.style.opacity = "0";
+            overlayContainer.style.height = "2rem"; // Minimized height
+            toggleButton.innerHTML = "▲";
+        }
     });
 
-    scrollingOverlay.addEventListener('mouseout', () => {
-        scrollingOverlay.classList.remove('h-[25%]');
-        scrollingOverlay.classList.add('h-[10%]');
-    });
-
-    document.body.appendChild(scrollingOverlay);
+    // Append elements
+    overlayContainer.appendChild(toggleButton);
+    overlayContainer.appendChild(scrollingOverlay);
+    document.body.appendChild(overlayContainer);
 
     // Add fade mask
     const fadeMask = document.createElement('div');

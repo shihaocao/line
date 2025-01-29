@@ -176,3 +176,16 @@ I found a few relics:
 Next to do is I really like the mobile pixelation effect. I want to figure out how to use WebGL render targets to try and implement that effect on desktop while maintaining size.
 
 ![Using Chrome Performance!](documentation/use_chrome_performance.jpg)
+
+
+# 01/28
+
+I'm nearing the end of this project, and I want to start putting on final touches soon. 
+
+A short todo list:
+- Improve mobile text formatting
+- Debug why track2 isnt always loading
+  - Jk it was loading fine
+- Hide the blurb text until after the voice over is complete
+- sync the debug sliders with talking about physics
+- Record a better voice over

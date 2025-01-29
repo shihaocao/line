@@ -35,7 +35,7 @@ const playTracks = async () => {
 
 const play_track2 = async () => {
     try {
-        await new Promise(resolve => setTimeout(resolve, 2000)); // 2-second delay
+        await new Promise(resolve => setTimeout(resolve, 1500)); // 2-second delay
         await audioElement2.play();
     } catch (error) {
         console.error('Error playing audio:', error);
@@ -43,7 +43,7 @@ const play_track2 = async () => {
 };
 
 // Word timing configuration
-const per_word_timeouts = [0, 3000, 1000, 800, 2000]; // last entry is the hold
+const per_word_timeouts = [0, 1500, 1000, 800, 2000]; // last entry is the hold
 const sum_timeouts_ms = per_word_timeouts.reduce((acc, num) => acc + num, 0);
 const total_timeout_on_word = per_word_timeouts.map((_, index, array) =>
     array.slice(0, index + 1).reduce((acc, num) => acc + num, 0)
