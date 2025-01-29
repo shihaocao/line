@@ -5,7 +5,7 @@ export function getReadmeContent() {
             <p class="text-lg">
                 In late 2024, I went to a Porter Robinson concert, and there was a line that was moving and shimmering that really captivated me.
                 The beauty of the line was fragile, and it reminded me of how delicate the moment was. Each moment of the line was unique — 
-                ephemerality is beauty. I knew then that I wanted to be able to capture that feeling and recreate it.
+                its ephemerality was beautiful. I knew then that I wanted to be able to capture that feeling and recreate it.
             </p>
             <p class="text-lg">
                 In homage to the Three Body Problem, I knew that was what I wanted as the underlying physics driving the simulation. 

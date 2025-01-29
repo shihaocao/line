@@ -227,10 +227,6 @@ export function setup_overlays(document: Document) {
     function calculateBrightness(elapsed: number): number {
         if (elapsed <= fadeInEndTime) {
             return elapsed / fadeInEndTime; // Fade in: interpolate from 0 to 1
-        } else if (elapsed >= fadeOutStartTime && elapsed <= fadeOutEndTime) {
-            return 1 - (elapsed - fadeOutStartTime) / (fadeOutEndTime - fadeOutStartTime); // Fade out: 1 to 0
-        } else if (elapsed > fadeOutEndTime) {
-            return 0; // After fade out: brightness is 0
         } else {
             return 1; // Between fade in and fade out: brightness is 1
         }
