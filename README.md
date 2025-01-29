@@ -189,3 +189,32 @@ A short todo list:
 - Hide the blurb text until after the voice over is complete
 - sync the debug sliders with talking about physics
 - Record a better voice over
+
+AAARGH as I'm towards the end of the project, I've spent an hour listening to my favorite songs and second guessing myself - is there a better song that fits this animation? And I've now realized my mistake: indeed as this was my first VJ project, it was easy to be like, oh lets do this or lets do that but truly, you have to pick the song first, and you have to mold everything about the visual mix as more layers of that song. You can't mold a song to an animation. It's just backwards. Lesson learned for next one haha.
+
+Now each time I listen to a song, I just think about the visual mix that would go with it! What fun!
+
+And indeed for some songs, I see nothing that would do it justice except for a music video. Indeed those are powerful songs.
+
+---
+
+Draft of a modified blurb:
+
+Do you hear the line? What do you see in the song?
+
+At concerts I pay attention to the visual mixes almost as much as the actual songs themselves, and at Porter Robinson, in late 2024, I was captivated. On screen, a shimmering line spoke to me. I listened to each verse as it sang, and followed its wavering beauty as it traced, and evaporated before eyes. I felted moved by the curves I understood, and yearned to empathize with the movements that were out of reach.
+
+
+The emphemeral line reminded me, that I, and that moment were delicate too. I imagined myself as a line -- would we ever meet? Would we ever meet again?
+
+To me, beauty is composed of the parts we can appreciate and cherish in the moment, and of the mystery and splendor that we are humble enough to ask, to be taught -- will you show me what is special to you? Beauty is how these mix to create the light and dark we see in each other's paintings.
+
+And so, with this project, I wanted to find that beauty -- to *listen to the line*.
+
+The underlying physics that drive this is a three body problem, inspired by the Three Body book series. As you you may know, the lines will never touch, instead they will always dance. Closer, further, and only time will tell how.
+
+If you want to visualize the other bodies, you can toggle the settings in the top left.
+
+I wish you all the best in finding beauty.
+
+If you'd like to learn more about the project or see more of my work, open the arrow dialogue below.

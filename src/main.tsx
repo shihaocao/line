@@ -22,7 +22,8 @@ const audioElement2 = new Audio('/audio/voice_over.mp3');
 
 audioElement1.loop = true;
 audioElement2.loop = false;
-audioElement1.volume = 0.05;
+audioElement1.volume = 0.01;
+audioElement2.volume = 1;
 
 // Function to start both tracks
 const playTracks = async () => {
@@ -35,7 +36,7 @@ const playTracks = async () => {
 
 const play_track2 = async () => {
     try {
-        await new Promise(resolve => setTimeout(resolve, 1500)); // 2-second delay
+        await new Promise(resolve => setTimeout(resolve, 500)); // 2-second delay
         await audioElement2.play();
     } catch (error) {
         console.error('Error playing audio:', error);
