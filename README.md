@@ -200,8 +200,6 @@ And indeed for some songs, I see nothing that would do it justice except for a m
 
 Draft of a modified blurb
 
-Please 
-
 At concerts, I take in the visual mixes almost as much as the songs themselves, and at Porter Robinson, in late 2024, I was captivated.
 
 On screen, a shimmering line spoke to me. I listened to each verse as it sang, and followed its wavering beauty as it traced, and evaporated before eyes. I felted moved by the curves I understood, and yearned to empathize with the movements that were out of reach.
@@ -214,7 +212,7 @@ The underlying physics that drive this is a three body problem, inspired by the 
 
 If you want to visualize the other bodies, you can toggle the settings in the top left. Click around to drag and zoom.
 
-If you'd like to learn more about the project or see more of my work, open the arrow dialogue below.
+If you'd like to learn more about the project or see more of my work, open the arrow dialogue below. Thanks.
 
 # 01/29
 

@@ -23,6 +23,7 @@ export function setup_overlays(document: Document) {
         intermediatePage.className = 'absolute inset-0 flex justify-center items-start pt-32 z-10 opacity-100 transition-opacity duration-3000';
         intermediatePage.style.transition = 'opacity 3s ease-in-out';
         intermediatePage.style.transform = 'translate(-10px, -5%)'; // Shift everything left by 10 pixels
+        intermediatePage.style.pointerEvents = 'none';  // Allows clicks to pass through
 
         document.body.appendChild(intermediatePage);
     
