@@ -198,16 +198,17 @@ And indeed for some songs, I see nothing that would do it justice except for a m
 
 ---
 
-Draft of a modified blurb:
+Draft of a modified blurb
 
-_and there's still so much I have yet to unfold_
+Please 
 
-At concerts, I take in the visual mixes almost as much as the actual songs themselves, and at Porter Robinson, in late 2024, I was captivated.
+At concerts, I take in the visual mixes almost as much as the songs themselves, and at Porter Robinson, in late 2024, I was captivated.
+
 On screen, a shimmering line spoke to me. I listened to each verse as it sang, and followed its wavering beauty as it traced, and evaporated before eyes. I felted moved by the curves I understood, and yearned to empathize with the movements that were out of reach.
 
-To me, beauty is composed of the parts we can appreciate and cherish in the moment, and of the mystery and splendor that we are humble enough to ask, to be taught -- will you show me what is special to you? Beauty is how these mix to create the light and dark we see in each other's art.
+To me, beauty is composed of the parts we can appreciate and cherish in the moment, and of the mystery and splendor that we are humble enough to ask, to be taught -- will you show me what is special to you? Beauty is the mix of light and dark we see in each other's art.
 
-And so, with this project, I wanted to find that beauty -- to *listen to the line*.
+And so, with this project, I wanted to find that beauty -- to *listen to the line*. There's still so much I have yet to unfold.
 
 The underlying physics that drive this is a three body problem, inspired by the Three Body book series. As you you may know, the lines will never touch, instead they will always dance. Closer, further, and only time will tell how we dance.
 

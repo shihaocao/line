@@ -17,31 +17,25 @@ enterButton.className = 'px-4 py-2 text-lg border-none rounded-md cursor-pointer
 landingPage.appendChild(enterButton);
 
 // Audio setup for two tracks
-const audioElement1 = new Audio('/audio/as_the_world_falls_down_aaron_richards_cover.mp3');
-const audioElement2 = new Audio('/audio/voice_over.mp3');
+const audioElement1 = new Audio('/audio/v3.mp3');
+const audioElement2 = new Audio('/audio/as_the_world_falls_down_aaron_richards_cover.mp3');
 
-audioElement1.loop = true;
-audioElement2.loop = false;
-audioElement1.volume = 0.05;
+audioElement1.loop = false;
+audioElement2.loop = true;
+audioElement1.volume = 1;
 audioElement2.volume = 1;
 
-// Function to start both tracks
+// Function to play track 1 and wait for it to finish before playing track 2
 const playTracks = async () => {
     try {
         await audioElement1.play();
+        await new Promise(resolve => audioElement1.addEventListener('ended', resolve, { once: true }));
+        await audioElement2.play(); // Starts looping after track 1 finishes
     } catch (error) {
         console.error('Error playing audio:', error);
     }
 };
 
-const play_track2 = async () => {
-    try {
-        await new Promise(resolve => setTimeout(resolve, 500)); // 2-second delay
-        await audioElement2.play();
-    } catch (error) {
-        console.error('Error playing audio:', error);
-    }
-};
 
 // Word timing configuration
 const per_word_timeouts = [0, 1500, 1000, 800, 2000]; // last entry is the hold
@@ -82,7 +76,6 @@ const createIntermediatePage = () => {
     setTimeout(() => {
         intermediatePage.remove();
         initializeAnimation(document); // Initialize the animation
-        play_track2();
     }, sum_timeouts_ms);
 };
 
