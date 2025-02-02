@@ -5,7 +5,7 @@ export function setup_overlays(document: Document) {
 
 
     const createIntermediatePage = (start, words, perWordTime) => {
-        const intermediate_fadeout = 3000;
+        const intermediate_fadeout = 2000;
         const hold_time = 2000;
     
         const per_word_timeouts = [
@@ -20,9 +20,9 @@ export function setup_overlays(document: Document) {
         );
     
         const intermediatePage = document.createElement('div');
-        intermediatePage.className = 'absolute inset-0 flex justify-center items-start pt-16 z-10 opacity-100 transition-opacity duration-3000';
+        intermediatePage.className = 'absolute inset-0 flex justify-center items-start pt-32 z-10 opacity-100 transition-opacity duration-3000';
         intermediatePage.style.transition = 'opacity 3s ease-in-out';
-        intermediatePage.style.transform = 'translateY(-5%)';
+        intermediatePage.style.transform = 'translate(-10px, -5%)'; // Shift everything left by 10 pixels
 
         document.body.appendChild(intermediatePage);
     
@@ -49,19 +49,24 @@ export function setup_overlays(document: Document) {
     };
     
     const s0 = 19 * 1000;
+    const s1 = 32.5 * 1000;
+    const s2 = 48 * 1000;
+    const s3 = 63 * 1000;
+    // const s0 = 5 * 1000;
+    // const s1 = 10 * 1000;
+    // const s2 = 15 * 1000;
+    // const s3 = 20 * 1000;
+
     createIntermediatePage(s0 - animation_delta,
         ['...a ', 'shimmering', 'line', 'spoke', 'to', 'me.'], 170);
     
-    const s1 = 33 * 1000;
     createIntermediatePage(s1 - animation_delta,
-        ['...empathize ', 'with ', 'the ', 'movements ', 'that ', 'were ', 'out ', 'of ', 'reach.'], 170);
+        ['...empathize ', 'with ', 'the ', 'movements ', 'that ', 'were ', 'out ', 'of ', 'reach.'], 190);
     
-    const s2 = 48 * 1000;
     createIntermediatePage(s2 - animation_delta,
         ['...will', 'you', 'show', 'me', 'what', 'is', 'special', 'to', 'you?'], 160);
     
 
-    const s3 = 63 * 1000; // Example start time at 60 seconds
     createIntermediatePage(
         s3 - animation_delta,
         ['...still', 'so', 'much', 'I', 'have', 'yet', 'to', 'unfold.'],
