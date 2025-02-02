@@ -200,21 +200,31 @@ And indeed for some songs, I see nothing that would do it justice except for a m
 
 Draft of a modified blurb:
 
-Do you hear the line? What do you see in the song?
+_and there's still so much I have yet to unfold_
 
-At concerts I pay attention to the visual mixes almost as much as the actual songs themselves, and at Porter Robinson, in late 2024, I was captivated. On screen, a shimmering line spoke to me. I listened to each verse as it sang, and followed its wavering beauty as it traced, and evaporated before eyes. I felted moved by the curves I understood, and yearned to empathize with the movements that were out of reach.
+At concerts, I take in the visual mixes almost as much as the actual songs themselves, and at Porter Robinson, in late 2024, I was captivated.
+On screen, a shimmering line spoke to me. I listened to each verse as it sang, and followed its wavering beauty as it traced, and evaporated before eyes. I felted moved by the curves I understood, and yearned to empathize with the movements that were out of reach.
 
-
-The emphemeral line reminded me, that I, and that moment were delicate too. I imagined myself as a line -- would we ever meet? Would we ever meet again?
-
-To me, beauty is composed of the parts we can appreciate and cherish in the moment, and of the mystery and splendor that we are humble enough to ask, to be taught -- will you show me what is special to you? Beauty is how these mix to create the light and dark we see in each other's paintings.
+To me, beauty is composed of the parts we can appreciate and cherish in the moment, and of the mystery and splendor that we are humble enough to ask, to be taught -- will you show me what is special to you? Beauty is how these mix to create the light and dark we see in each other's art.
 
 And so, with this project, I wanted to find that beauty -- to *listen to the line*.
 
-The underlying physics that drive this is a three body problem, inspired by the Three Body book series. As you you may know, the lines will never touch, instead they will always dance. Closer, further, and only time will tell how.
+The underlying physics that drive this is a three body problem, inspired by the Three Body book series. As you you may know, the lines will never touch, instead they will always dance. Closer, further, and only time will tell how we dance.
 
-If you want to visualize the other bodies, you can toggle the settings in the top left.
-
-I wish you all the best in finding beauty.
+If you want to visualize the other bodies, you can toggle the settings in the top left. Click around to drag and zoom.
 
 If you'd like to learn more about the project or see more of my work, open the arrow dialogue below.
+
+# 01/29
+
+Final Technical Reflection:
+
+The project really just started out as: "damn that really was cool", and I wanted to try taking a stab
+at recreating it, and learning along the way. I didn't understand anything about "beauty" at the time.
+The quiet time of winter always brings about reflection, and as I added more to the project, I really did realize there was more for me.
+
+---
+
+After this project there's more things I want to take on! Having a better grasp on three.js means I can take on other VJ mixes if I wanted to, but also other info-graphic projects such as a website for my old satellite team.
+
+I took a break from other projects to work on this one, and I think it was much needed. There's nothing wrong with havin

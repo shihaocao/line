@@ -1,45 +1,35 @@
 export function getReadmeContent() {
     return `
         <div class="space-y-4 text-gray-300 max-w-screen-lg mx-auto">
-            <h2 class="text-3xl font-bold text-white">Listen to the Line</h2>
-            <p class="text-lg">
-                In late 2024, I went to a Porter Robinson concert, and there was a line that was moving and shimmering that really captivated me.
-                The beauty of the line was fragile, and it reminded me of how delicate the moment was. Each moment of the line was unique — 
-                its ephemerality was beautiful. I knew then that I wanted to be able to capture that feeling and recreate it.
-            </p>
-            <p class="text-lg">
-                In homage to the Three Body Problem, I knew that was what I wanted as the underlying physics driving the simulation. 
-                Everything else followed trying to pursue two more principles:
-            </p>
-            <ul class="list-disc list-inside pl-4 space-y-2">
-                <li>How can I make the vibes delicate?</li>
-                <li>How can the user interact with it?</li>
-            </ul>
-            <hr class="border-gray-600 my-6">
-            <p class="text-lg">
-                If you haven't already, you can click/drag around. And you're able to drag around the debug opacity that shows you the other bodies of the simulation.
-            </p>
-            <p class="text-lg">
-                If you wanted to hear (and see) a bit of what inspired me, here's a clip of his 
-                <a href="https://www.youtube.com/watch?v=duvz-aL3Xyg" target="_blank" class="text-blue-400 hover:underline">live version of Unfold</a> 
-                that really stuck with me.
-            </p>
-            <h2 class="text-3xl font-bold text-white">Song Choice</h2>
-            <p class="text-lg">
-                I think a core theme about orbiting bodies is that they may get close, but they will never touch. Furthermore, it is very difficult to predict where they may go, 
-                or how they will dance. The only thing you do know, is that they will dance. I felt that Aaron Richardson's remake of 
+            <h2 class="text-2xl font-bold text-white">Listen to the Line</h2>
+            <p>Do you hear the line? What do you see in the song?</p>
+
+            <p>At concerts I pay attention to the visual mixes almost as much as the actual songs themselves, and at Porter Robinson, in late 2024, I was captivated. On screen, a shimmering line spoke to me. I listened to each verse as it sang, and followed its wavering beauty as it traced, and evaporated before eyes. I felt moved by the curves I understood, and yearned to empathize with the movements that were out of reach.</p>
+
+            <p>To me, beauty is composed of the parts we can appreciate and cherish in the moment, and of the mystery and splendor that we are humble enough to ask, to be taught -- will you show me what is special to you? Beauty is how these mix to create the light and dark we see in each other's art.</p>
+
+            <p>And so, with this project, I wanted to find that beauty -- to <em>listen to the line</em>.</p>
+
+            <p>The underlying physics that drive this is a three-body problem, inspired by the Three Body book series. As you may know, the lines will never touch, instead they will always dance. Closer, further, and only time will tell how we dance.</p>
+
+            <p>If you want to visualize the other bodies, you can toggle the settings in the top left.</p>
+
+            <p>I wish you all the best in finding beauty.</p>
+
+            <h2 class="text-2xl font-bold text-white">Thank Yous</h2>
+            <p>Thank you to Nikita, Viraat, Tiffany, Leyton, and <a href="https://playspace.club/" target="_blank" class="text-blue-400 hover:underline">Playspace</a> for their feedback and inspiration.
+
+            <h2 class="text-2xl font-bold text-white">Song Choice</h2>
+            <p>
+                I felt that Aaron Richards's remake of 
                 <a href="https://open.spotify.com/track/2fDr2ASQg3fGcsxpTxszK6?si=4298e00004104d2a" target="_blank" class="text-blue-400 hover:underline">As the World Falls Down</a> 
-                matches that a bit. It also happened to be added to my Spotify liked around when I was adding audio to the project.
+                describes a wavering dance of two. It also hapened to have just found the soung on Spotify when I was adding audio to the project.
             </p>
-            <h2 class="text-3xl font-bold text-white">Technical Details</h2>
-            <p class="text-lg">
+            <h2 class="text-2xl font-bold text-white">Details and More</h2>
+            <p>
                 If you're more interested in the development log, features I gave up on, or my embarrassing coding mistakes, 
                 check out the <a href="https://github.com/shihaocao/line" target="_blank" class="text-blue-400 hover:underline">GitHub link</a>.
-            </p>
-            <h2 class="text-3xl font-bold text-white">About Me</h2>
-            <p class="text-lg">
-                I've got some other projects and dumb ideas at 
-                <a href="https://www.shihaocao.com" target="_blank" class="text-blue-400 hover:underline">shihaocao.com</a>.
+                You can find out more about me at <a href="https://www.shihaocao.com" target="_blank" class="text-blue-400 hover:underline">shihaocao.com</a>.
             </p>
         </div>
     `;

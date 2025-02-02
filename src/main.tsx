@@ -22,7 +22,7 @@ const audioElement2 = new Audio('/audio/voice_over.mp3');
 
 audioElement1.loop = true;
 audioElement2.loop = false;
-audioElement1.volume = 0.01;
+audioElement1.volume = 0.05;
 audioElement2.volume = 1;
 
 // Function to start both tracks
