@@ -1,8 +1,81 @@
 import { getReadmeContent } from './blurb.tsx';
 import { animationContext } from './context.tsx';
-
+const animation_delta = 5300; // from sum overlay
 export function setup_overlays(document: Document) {
-    // Create container for overlays and slider
+
+
+    const createIntermediatePage = (start, words, perWordTime) => {
+        const intermediate_fadeout = 3000;
+        const hold_time = 2000;
+    
+        const per_word_timeouts = [
+            start,
+            ...Array(words.length - 1).fill(perWordTime),
+            hold_time + intermediate_fadeout
+        ];
+    
+        const sum_timeouts_ms = per_word_timeouts.reduce((acc, num) => acc + num, 0);
+        const total_timeout_on_word = per_word_timeouts.map((_, index, array) =>
+            array.slice(0, index + 1).reduce((acc, num) => acc + num, 0)
+        );
+    
+        const intermediatePage = document.createElement('div');
+        intermediatePage.className = 'absolute inset-0 flex justify-center items-start pt-16 z-10 opacity-100 transition-opacity duration-3000';
+        intermediatePage.style.transition = 'opacity 3s ease-in-out';
+        intermediatePage.style.transform = 'translateY(-5%)';
+
+        document.body.appendChild(intermediatePage);
+    
+        words.forEach((word, index) => {
+            const wordElement = document.createElement('div');
+            wordElement.innerText = word;
+            wordElement.className = `text-white text-sm font-serif italic font-light opacity-0 transition-opacity duration-1000`;
+            wordElement.style.transform = `translateX(${index * 6}px)`;
+            intermediatePage.appendChild(wordElement);
+    
+            setTimeout(() => {
+                wordElement.classList.add('opacity-100');
+            }, total_timeout_on_word[index]);
+        });
+    
+        setTimeout(() => {
+            intermediatePage.classList.remove('opacity-100');
+            intermediatePage.classList.add('opacity-0');
+        }, sum_timeouts_ms - intermediate_fadeout);
+    
+        setTimeout(() => {
+            intermediatePage.remove();
+        }, sum_timeouts_ms);
+    };
+    
+    const s0 = 19 * 1000;
+    createIntermediatePage(s0 - animation_delta,
+        ['...a ', 'shimmering', 'line', 'spoke', 'to', 'me.'], 170);
+    
+    const s1 = 33 * 1000;
+    createIntermediatePage(s1 - animation_delta,
+        ['...empathize ', 'with ', 'the ', 'movements ', 'that ', 'were ', 'out ', 'of ', 'reach.'], 170);
+    
+    const s2 = 48 * 1000;
+    createIntermediatePage(s2 - animation_delta,
+        ['...will', 'you', 'show', 'me', 'what', 'is', 'special', 'to', 'you?'], 160);
+    
+
+    const s3 = 63 * 1000; // Example start time at 60 seconds
+    createIntermediatePage(
+        s3 - animation_delta,
+        ['...still', 'so', 'much', 'I', 'have', 'yet', 'to', 'unfold.'],
+        170
+    );
+
+    // "only time will tell how we dance"
+    const s4 = 80 * 1000; // Example start time at 75 seconds
+    createIntermediatePage(
+        s4 - animation_delta,
+        ['...only', 'time', 'will', 'tell', 'how', 'we', 'dance.'],
+        170
+    );
+
     const container = document.createElement('div');
     container.className = `
         absolute top-12 left-2 bg-black/50 text-white rounded-lg p-2 space-y-2 

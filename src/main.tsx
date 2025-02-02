@@ -13,7 +13,7 @@ document.body.appendChild(landingPage);
 // Create the "Enter" button
 const enterButton = document.createElement('button');
 enterButton.innerText = 'hello, connect to speakers or headphones!';
-enterButton.className = 'px-4 py-2 text-lg border-none rounded-md cursor-pointer bg-black text-white transition-transform duration-200 hover:scale-110';
+enterButton.className = 'px-4 py-2 text-lg font-serif italic font-light border-none rounded-md cursor-pointer bg-black text-white transition-transform duration-200 hover:scale-110';
 landingPage.appendChild(enterButton);
 
 // Audio setup for two tracks
@@ -56,7 +56,7 @@ const createIntermediatePage = () => {
     words.forEach((word, index) => {
         const wordElement = document.createElement('div');
         wordElement.innerText = word;
-        wordElement.className = `text-white text-3xl font-bold opacity-0 transition-opacity duration-1000`;
+        wordElement.className = `text-white text-3xl font-serif italic font-light opacity-0 transition-opacity duration-1000`;
         wordElement.style.transform = `translateY(${index * 25}px)`; // Reduce stacking gap
         intermediatePage.appendChild(wordElement);
 
