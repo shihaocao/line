@@ -238,9 +238,13 @@ WHen adjusting fade in/fade out, I think it is best to use the audacity envelope
 
 Today I also added fading in of specical highlighted words. This was a pain to code in JS. I also had a bit of a funny oopsie where the div I had these in, spanned the whole page and covered all my buttons. So I had to debug
 why I couldn't click on anything.
-![Audacity Envelope!](documentation/fadein_words.gif)
+![Fade in words!](documentation/fadein_words.gif)
 
 ## Finishing Touches:
 
 I'm taking out the whole track volume variation... It's a bit ironic since that's the last thing that is actually tied to the song itself! But that's ok haha, I'll put in some better audio reactivity in the
 next project I make.
+
+I made the favicon in figma, it took me a bit to learn about frames and export settings but I think figma is honestly really good for fast graphics like this. Really just blows gimp out of the water. Although, GIMP will work without an internet connection...
+
+![Favicon!](documentation/favicon.jpg)
