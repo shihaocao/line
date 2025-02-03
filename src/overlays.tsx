@@ -122,10 +122,11 @@ export function setup_overlays(document: Document) {
     overlay.innerText = 'Physics Timesteps: 0';
     container.appendChild(overlay);
 
-    const volumeOverlay = document.createElement('div');
-    volumeOverlay.className = `p-2 bg-black/50 rounded-lg text-sm`;
-    volumeOverlay.innerText = 'Mic Volume: 0';
-    container.appendChild(volumeOverlay);
+    // Ironic, i'm taking this out because it doesn't add that much.
+    // const volumeOverlay = document.createElement('div');
+    // volumeOverlay.className = `p-2 bg-black/50 rounded-lg text-sm`;
+    // volumeOverlay.innerText = 'Mic Volume: 0';
+    // container.appendChild(volumeOverlay);
 
     function add_slider(label_name: string) {
         // Add slider
@@ -346,6 +347,5 @@ export function setup_overlays(document: Document) {
         fadeMask.style.opacity = `${1 - animationContext.brightness}`;
 
         overlay.innerText = `Physics Timesteps: ${animationContext.physics_timestep}`;
-        volumeOverlay.innerText = `Volume: ${animationContext.micVolume}`;
     };
 }

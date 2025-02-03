@@ -42,9 +42,15 @@ If you'd like to learn more about the project or see more of my work, open the a
             </p>
             <h2 class="text-2xl font-bold text-white">Details and More</h2>
             <p>
-                If you're more interested in the development log, features I gave up on, or my embarrassing coding mistakes, 
+                If you're more interested in the development log, the detours, and the features I've postponed to the next project,  
                 check out the <a href="https://github.com/shihaocao/line" target="_blank" class="text-blue-400 hover:underline">GitHub link</a>.
                 You can find out more about me at <a href="https://www.shihaocao.com" target="_blank" class="text-blue-400 hover:underline">shihaocao.com</a>.
+            </p>
+
+            <h2 class="text-2xl font-bold text-white">Send me your stuff!</h2>
+            <p>
+                I would not have made this if I were not inspired by other people's work and works in progress. Please send me yours or things you find cool!
+                It's more fun to create and enjoy things together. Say hi, and shoot me an email at <a href="mailto:shihaocao@gmail.com">shihaocao@gmail.com</a>!
             </p>
         </div>
     `;
