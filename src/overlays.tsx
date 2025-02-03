@@ -160,6 +160,8 @@ export function setup_overlays(document: Document) {
             const value = parseFloat(slider.value);
             animationContext.debugBodyContext.lineOpacity = value;
             animationContext.debugBodyContext.bodyOpacity = value;
+            animationContext.debugBodyContext2.lineOpacity = value;
+            animationContext.debugBodyContext2.bodyOpacity = value;
         });    
     }
     {
@@ -170,10 +172,42 @@ export function setup_overlays(document: Document) {
         slider.addEventListener('input', () => {
             const value = parseFloat(slider.value);
             animationContext.debugBodyContext.tail_length_factor = value;
+            animationContext.debugBodyContext2.tail_length_factor = value;
             animationContext.mainBodyContext.tail_length_factor = value;
         });    
     }
 
+    {
+        const hueSlider = add_slider('Hue Debug 1');
+        hueSlider.min = '0';
+        hueSlider.max = '1';
+        hueSlider.step = '0.01';
+        hueSlider.value = `${animationContext.debugBodyContext.hue}`; // Default to 0
+    
+        hueSlider.addEventListener('input', () => {
+            const hueValue = parseFloat(hueSlider.value);
+            animationContext.debugBodyContext.hue = hueValue;
+            
+            // Example: Update a preview element
+            // document.body.style.backgroundColor = `hsl(${hueValue * 360}, 100%, 50%)`;
+        });
+    }
+
+    {
+        const hueSlider = add_slider('Hue Debug 2');
+        hueSlider.min = '0';
+        hueSlider.max = '1';
+        hueSlider.step = '0.01';
+        hueSlider.value = `${animationContext.debugBodyContext2.hue}`; // Default to 0
+    
+        hueSlider.addEventListener('input', () => {
+            const hueValue = parseFloat(hueSlider.value);
+            animationContext.debugBodyContext2.hue = hueValue;
+            
+            // Example: Update a preview element
+            // document.body.style.backgroundColor = `hsl(${hueValue * 360}, 100%, 50%)`;
+        });
+    }
     // {
     //     const slider = add_slider('Speed');
     //     slider.min = '0.5';
@@ -317,12 +351,19 @@ export function setup_overlays(document: Document) {
             const val = maxAutoDebugOpacity * (elapsed - a.debug_fade_in_start_s) / (fade_in_dur);
             animationContext.debugBodyContext.bodyOpacity = val;
             animationContext.debugBodyContext.lineOpacity = val;
-        } else if (elapsed > a.debug_fade_in_end_s && elapsed < a.debug_fade_out_end_s) {
-            // Fade out
-            const val = maxAutoDebugOpacity * (a.debug_fade_out_end_s - elapsed) / (fade_out_dur);
-            animationContext.debugBodyContext.bodyOpacity = val;
-            animationContext.debugBodyContext.lineOpacity = val;
+            animationContext.debugBodyContext2.bodyOpacity = val;
+            animationContext.debugBodyContext2.lineOpacity = val;
         }
+        // Turn off fade out
+        // People like it more maybe
+        // else if (elapsed > a.debug_fade_in_end_s && elapsed < a.debug_fade_out_end_s) {
+        //     // Fade out
+        //     const val = maxAutoDebugOpacity * (a.debug_fade_out_end_s - elapsed) / (fade_out_dur);
+        //     animationContext.debugBodyContext.bodyOpacity = val;
+        //     animationContext.debugBodyContext.lineOpacity = val;
+        //     animationContext.debugBodyContext2.bodyOpacity = val;
+        //     animationContext.debugBodyContext2.lineOpacity = val;
+        // }
     }
 
     // Brightness timing markers

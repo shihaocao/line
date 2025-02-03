@@ -91,5 +91,6 @@ enterButton.addEventListener('click', () => {
     setTimeout(() => {
         landingPage.remove();
         createIntermediatePage(); // Show the intermediate page
+        // initializeAnimation(document); // Go straight to the animation
     }, 1000); // Match the fade-out duration (1s)
 });

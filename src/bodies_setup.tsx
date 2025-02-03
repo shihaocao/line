@@ -81,9 +81,12 @@ export function setupBodiesAndSun(scene: THREE.Scene, context: typeof animationC
             if (i == 0) {
                 body_context = context.mainBodyContext;
                 color = new THREE.Color(0xffffff);
-            } else {
+            } else if (i == 1) {
                 color = pastelColors[i];
                 body_context = context.debugBodyContext;
+            } else if (i == 2) {
+                color = pastelColors[i];
+                body_context = context.debugBodyContext2;
             }
             bodies.push(new Body(position, velocity, color, mass, scene, vis_body, vis_trace, false, vis_light, context, body_context));
         }

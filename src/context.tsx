@@ -2,6 +2,9 @@ export class BodyContext {
     public lineOpacity: number = 1;
     public bodyOpacity: number = 1;
     public tail_length_factor: number = 1;
+    public sat: number = 0;
+    public hue: number = 1;
+    public lightness: number = 1;
 }
 
 export class AnimationContext {
@@ -23,11 +26,12 @@ export class AnimationContext {
     public debugOpacity: number = 0;
 
     public debug_fade_in_end_s: number = 90 - 5;
-    public debug_fade_in_start_s: number = this.debug_fade_in_end_s - 5;
+    public debug_fade_in_start_s: number = this.debug_fade_in_end_s - 22;
     public debug_fade_out_end_s: number = this.debug_fade_in_end_s + 3;
 
     public mainBodyContext: BodyContext = new BodyContext();
     public debugBodyContext: BodyContext = new BodyContext();
+    public debugBodyContext2: BodyContext = new BodyContext();
     public offBodyContext: BodyContext = new BodyContext();
     // No constructor logic needed unless defaults are complex
 }
@@ -35,6 +39,15 @@ export class AnimationContext {
 export const animationContext = new AnimationContext();
 animationContext.debugBodyContext.bodyOpacity = 0;
 animationContext.debugBodyContext.lineOpacity = 0;
-animationContext.mainBodyContext.lineOpacity = 0.5;
+animationContext.mainBodyContext.lineOpacity = 0.7;
 animationContext.offBodyContext.bodyOpacity = 0;
 animationContext.offBodyContext.lineOpacity = 0;
+const saturation = 0.7; // Fixed pastel-like saturation
+const lightness = 0.7; // Fixed pastel-like lightness
+animationContext.debugBodyContext.sat = saturation;
+animationContext.debugBodyContext2.sat = saturation;
+animationContext.debugBodyContext.lightness = lightness;
+animationContext.debugBodyContext2.lightness = lightness;
+animationContext.debugBodyContext2 = structuredClone(animationContext.debugBodyContext);
+animationContext.debugBodyContext.hue = 195/360;
+animationContext.debugBodyContext2.hue = 318/360;

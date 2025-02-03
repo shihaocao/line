@@ -146,6 +146,21 @@ export default class Body {
     }
 
     update(dt: number): void {
+        // Color update:
+
+        const color = new THREE.Color().setHSL(this.bodyContext.hue, this.bodyContext.sat, this.bodyContext.lightness);
+        this.color = color;
+        this.material.color = this.color;
+        this.material2.color = this.color;
+        this.mesh.color = this.color;
+        this.mesh2.color = this.color;
+        if (this.enable_light) {
+            this.light.color.set(this.color);
+        }
+        this.traceMaterial.uniforms.color.value.set(this.color);
+        this.traceMaterial.uniforms.color.needsUpdate = true;
+
+
         this.velocity.add(this.acceleration.clone().multiplyScalar(dt));
         if (this.enable_anchor) {
             this.velocity = new THREE.Vector3(0, 0, 0);
