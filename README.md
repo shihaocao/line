@@ -5,13 +5,13 @@ I want to animate a line tracing itself out, I think it will look pretty.
 
 Here is my first pass, I used used a particle like physics model, orbiting the origin dependent on gravity plus acceleration. It is too orbit like, also there is some clipping glitch somewhere.
 
-![First Orbit Rendering](documentation/first-render.png)
+![First Orbit Rendering](documentation/first-render.jpg)
 
 ## 11/04
 
 I figured out orbit controls in pygame + pyopengl. This makes me trumendously happy, and thank goodness I dont have to do anything related to three js.
 
-![With Axes and Orbit](documentation/orbit_controls_and_stacked_cubic.png)
+![With Axes and Orbit](documentation/orbit_controls_and_stacked_cubic.jpg)
 
 ## 11/10
 
@@ -39,7 +39,7 @@ Nonetheless the graphics are cool and we aren't launching projectiles out of orb
 
 It turns out that the concept of an energy limit, or a speed limit on the particles is deeply non physical, since this would let it travel into an area of lower gravitational potential without accelerating its KE. This leaves us with the potential for getting trapped in lower energy states as we enter a very tight orbit.
 
-![Energy Limit Not Working](documentation/energy_limit_not_working.png)
+![Energy Limit Not Working](documentation/energy_limit_not_working.jpg)
 
 I think my next plan for a cool animation would be some sort of:
 
@@ -226,4 +226,16 @@ The quiet time of winter always brings about reflection, and as I added more to 
 
 After this project there's more things I want to take on! Having a better grasp on three.js means I can take on other VJ mixes if I wanted to, but also other info-graphic projects such as a website for my old satellite team.
 
-I took a break from other projects to work on this one, and I think it was much needed. There's nothing wrong with havin
+I took a break from other projects to work on this one, and I think it was much needed. There's nothing wrong with having
+
+# 02/02
+
+Today I did the final recording oneshot. I used audacity to mix it directly with the audio song, I felt like this gave me more control, especially since JS volume toggling seemed to be buggy and I didn't want to mess with it.
+
+WHen adjusting fade in/fade out, I think it is best to use the audacity envelope tool instead of using the fade in fade out directly. This lets you change it dynamically, where as once you apply a fade, it mutates the base audio which sucks.
+
+![Audacity Envelope!](documentation/audacity_fadein_fadeout.jpg)
+
+Today I also added fading in of specical highlighted words. This was a pain to code in JS. I also had a bit of a funny oopsie where the div I had these in, spanned the whole page and covered all my buttons. So I had to debug
+why I couldn't click on anything.
+![Audacity Envelope!](documentation/fadein_words.gif)

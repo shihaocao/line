@@ -13,7 +13,7 @@ document.body.appendChild(landingPage);
 // Create the "Enter" button
 const enterButton = document.createElement('button');
 enterButton.innerText = 'hello, connect to speakers or headphones!';
-enterButton.className = 'px-4 py-2 text-lg font-serif italic font-light border-none rounded-md cursor-pointer bg-black text-white transition-transform duration-200 hover:scale-110';
+enterButton.className = 'px-4 py-2 text-lg font-serif italic font-light border-none rounded-md cursor-pointer bg-black text-white transition-transform duration-200 hover:scale-110 outline outline-1 outline-white';
 landingPage.appendChild(enterButton);
 
 // Audio setup for two tracks
