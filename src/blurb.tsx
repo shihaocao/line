@@ -32,7 +32,7 @@ If you'd like to learn more about the project or see more of my work, open the a
             </p>
 
             <h2 class="text-2xl font-bold text-white">Thank Yous</h2>
-            <p>Thank you to Nikita, Viraat, Tiffany, Leyton, and <a href="https://playspace.club/" target="_blank" class="text-blue-400 hover:underline">Playspace</a> for their feedback and inspiration.
+            <p>Thank you to Nikita, Viraat, Cherie, Tiffany, Leyton, and <a href="https://playspace.club/" target="_blank" class="text-blue-400 hover:underline">Playspace</a> for their feedback and inspiration.
 
             <h2 class="text-2xl font-bold text-white">Song Choice</h2>
             <p>
