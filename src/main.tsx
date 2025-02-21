@@ -17,7 +17,7 @@ enterButton.className = 'px-4 py-2 text-lg font-serif italic font-light border-n
 landingPage.appendChild(enterButton);
 
 // Audio setup for two tracks
-const audioElement1 = new Audio('/audio/v3.mp3');
+const audioElement1 = new Audio('/audio/v3-final.mp3');
 const audioElement2 = new Audio('/audio/as_the_world_falls_down_aaron_richards_cover.mp3');
 
 audioElement1.loop = false;
